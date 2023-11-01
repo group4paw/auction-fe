@@ -25,3 +25,33 @@ body {
     )
     rgb(var(--background-start-rgb)); */
 }
+
+h1 {
+  font-size: 86px;
+  line-height: 71.66px;
+}
+
+h2 {
+  font-size: 71.66px;
+  line-height: 59.72px;
+}
+
+h3 {
+  font-size: 59.72px;
+  line-height: 49.77px;
+}
+
+h4 {
+  font-size: 49.77px;
+  line-height: 46px;
+}
+
+h5 {
+  font-size: 41.47px;
+  line-height: 38px;
+}
+
+h6 {
+  font-size: 34.56px;
+  line-height: 32px;
+}
