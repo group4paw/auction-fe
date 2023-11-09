@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Staatliches, Sarala } from "next/font/google";
+import Navbar from "@/components/Navbar";
 
 const sarala = Sarala({
   weight: ["400", "700"],
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sarala.variable} ${staatliches.variable}`}>
+        <Navbar />
         {children}
       </body>
     </html>

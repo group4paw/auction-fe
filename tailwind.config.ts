@@ -56,6 +56,7 @@ const config: Config = {
         300: "#23252C",
         500: "#090A0A",
       },
+      white: "#FFFFFF",
     },
   },
   plugins: [],
