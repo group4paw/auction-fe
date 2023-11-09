@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth-slice";
+import navbarReducer from "./features/navbar";
+import auctionReducer from "./features/auction";
 
 export const store = configureStore({
   reducer: {
-    authReducer,
+    auth: authReducer,
+    navbar: navbarReducer,
+    auction: auctionReducer,
   },
 });
 

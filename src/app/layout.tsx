@@ -27,7 +27,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sarala.variable} ${staatliches.variable}`}>
-        <Navbar />
         <Providers>{children}</Providers>
       </body>
     </html>
