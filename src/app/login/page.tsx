@@ -1,11 +1,12 @@
 "use client";
 
+import PreviewCard from "@/components/PreviewCard";
 import React, { useState } from "react";
 
 const LoginPage = () => {
   return (
     <div>
-      <button type="submit">Login</button>
+      <PreviewCard/>
     </div>
   );
 };
