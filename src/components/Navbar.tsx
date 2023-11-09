@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Cart from "@/assets/icons/cart.svg";
 import Redeye from "@/assets/icons/redeye.svg";
+import Link from "next/link";
 
 const Navbar = () => {
-  const [active, setActive] = React.useState("live-auction");
+  const [active, setActive] = React.useState("");
 
   return (
     <>
@@ -28,15 +29,21 @@ const Navbar = () => {
                   <p className="text-neutral-500">@ouroboros</p>
                 </div>
                 <div className="flex gap-1">
-                  <Image src={Bookmark} alt="" width={32} />
-                  <Image src={Cart} alt="" width={28} />
-                  <Image src={Redeye} alt="" width={28} />
+                  <Link href="/wishlist">
+                    <Image src={Bookmark} alt="" width={32} />
+                  </Link>
+                  <Link href="/cart">
+                    <Image src={Cart} alt="" width={32} />
+                  </Link>
+                  <Link href="/wishlist">
+                    <Image src={Redeye} alt="" width={32} />
+                  </Link>
                 </div>
               </div>
             </div>
-            <div className="font-sarala border-2 border-neutral-900 px-1.5 py-1.5 flex gap-3 rounded-3xl">
+            <div className="relative font-sarala border-2 border-neutral-900 px-1.5 py-1.5 flex rounded-3xl">
               <button
-                onClick={() => {
+                onClick={(e) => {
                   setActive("live-auction");
                 }}
                 className={`${
@@ -48,7 +55,7 @@ const Navbar = () => {
                 Live Auction
               </button>
               <button
-                onClick={() => {
+                onClick={(e) => {
                   setActive("coming-soon");
                 }}
                 className={`${
