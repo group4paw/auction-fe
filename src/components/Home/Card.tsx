@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuction } from "@/redux/features/auction";
 
 const Card = ({ data }: any) => {
-  const dispatch = useDispatch();
   return (
     <>
       <div className="flex flex-col rounded-lg w-80 h-96 bg-neutral-900 bg-opacity-50">
         <img
-          src={data.idPainting.image}
+          src={data.idPainting?.image}
           alt=""
           className="rounded-t-lg h-[14.5rem] object-cover"
         />
@@ -20,7 +19,7 @@ const Card = ({ data }: any) => {
               {data.idPainting.title}
             </p>
             <img
-              src={data.owner.image}
+              src={data.owner?.image}
               alt=""
               className="rounded-full h-16 w-16 object-cover -mt-8"
             />
