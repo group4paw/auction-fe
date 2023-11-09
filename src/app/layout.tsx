@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { Staatliches, Sarala } from "@next/font/google";
+import { Staatliches, Sarala } from "next/font/google";
 
 const sarala = Sarala({
   weight: ["400", "700"],
