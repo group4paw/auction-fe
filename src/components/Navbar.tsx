@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <div className="w-full px-2 sm:px-6 lg:px-20 lg:py-7">
+        <div className="w-full px-2 sm:px-6 lg:px-20 lg:py-7 bg-blue-700">
           <div className="relative flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <Image
