@@ -18,7 +18,7 @@ const Card = ({ data }: any) => {
         <div className="flex flex-col px-4">
           <div className="flex flex-row justify-between">
             <p className="text-neutral-100 font-sarala font-bold text-base my-4 overflow-hidden truncate">
-              {data.idPainting.title}
+              {data.idPainting?.title}
             </p>
             <img
               src={data.owner?.image}
