@@ -6,9 +6,15 @@ import Bookmark from "@/assets/icons/bookmark.svg";
 import Cart from "@/assets/icons/cart.svg";
 import Redeye from "@/assets/icons/redeye.svg";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { setNavbar } from "@/redux/features/navbar";
 
 const Navbar = () => {
-  const [active, setActive] = React.useState("");
+  const [active, setActive] = React.useState(
+    useSelector((state: any) => state.navbar.value)
+  );
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -45,6 +51,7 @@ const Navbar = () => {
               <button
                 onClick={(e) => {
                   setActive("live-auction");
+                  dispatch(setNavbar("live-auction"));
                 }}
                 className={`${
                   active == "live-auction"
@@ -57,6 +64,7 @@ const Navbar = () => {
               <button
                 onClick={(e) => {
                   setActive("coming-soon");
+                  dispatch(setNavbar("coming-soon"));
                 }}
                 className={`${
                   active == "coming-soon"
