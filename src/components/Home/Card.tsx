@@ -9,7 +9,7 @@ const Card = ({ data }: any) => {
     <>
       <div className="flex flex-col rounded-lg w-80 h-96 bg-neutral-900 bg-opacity-50">
         <img
-          src={data.idPainting?.image}
+          src={data.idPainting?.image || ""}
           alt=""
           className="rounded-t-lg h-[14.5rem] object-cover"
         />
