@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Bookmark from "@/assets/icons/bookmark.svg";
-import { useSelector } from "react-redux";
 
 export default function AuctionCardDetail({ data }: any) {
   return (
