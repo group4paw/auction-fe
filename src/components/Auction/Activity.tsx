@@ -1,9 +1,9 @@
 import Refresh from "@/assets/icons/refresh.svg";
 import Image from "next/image";
 
-export default function AuctionActivityComp() {
+export default function AuctionActivityComp({ data }: any) {
   return (
-    <div className="flex-col ml-8">
+    <div className="flex-col ml-0 lg:ml-8">
       <div className="flex grow  justify-between items-start mb-4">
         <p className="text-[16px] font-bold text-white">Activity</p>
         <Image src={Refresh} alt="refresh" width={20} height={20} />

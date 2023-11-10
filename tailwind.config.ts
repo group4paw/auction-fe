@@ -23,7 +23,7 @@ const config: Config = {
         100: "#7CACF3",
         300: "#4488EE",
         500: "#1565DF",
-		600: "#114AA1", // interpolated
+        600: "#114AA1", // interpolated
         700: "#0C1027",
         900: "#090C1D",
       },
