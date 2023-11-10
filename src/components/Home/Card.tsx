@@ -33,7 +33,7 @@ const Card = ({ data }: any) => {
                 Highest bid
               </p>
               <p className="font-sarala text-sm text-neutral-100">
-                {data.highestBid}
+                Rp{data.highestBid}
               </p>
             </div>
             <div className="flex-auto text-right">

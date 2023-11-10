@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-24 py-12">
-      <div className="z-10 max-w-5xl w-full items-center justify-start gap-8 font-mono text-sm lg:flex flex-wrap">
+    <main className="flex min-h-screen flex-col items-center justify-center lg:justify-between lg:px-24 py-12">
+      <div className="z-10 lg:max-w-5xl w-full items-center justify-center lg:justify-start gap-4 font-mono text-sm flex flex-wrap">
         <ListCard />
       </div>
     </main>

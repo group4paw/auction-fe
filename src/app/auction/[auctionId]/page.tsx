@@ -40,8 +40,8 @@ export default function AuctionDetail() {
     <>
       {!isLoading ? (
         <>
-          <div className="px-28 mt-9">
-            <div className="flex mb-14">
+          <div className="px-5 lg:px-28 mt-9">
+            <div className="flex lg:flex-row flex-col mb-14">
               <AuctionCardDetail data={dataAuction} />
               <AuctionActivityComp data={dataAuction} />
             </div>
