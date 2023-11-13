@@ -77,7 +77,7 @@ export default function ListCard() {
         ) : (
           <div className="w-screen flex justify-center items-center h-1/2">
             <p className="text-2xl text-neutral-700">
-              You don't have any wishlist
+              You dont have any wishlist
             </p>
           </div>
         )
