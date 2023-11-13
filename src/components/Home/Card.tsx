@@ -1,13 +1,53 @@
-/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Clock from "@/assets/icons/clock.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { setAuction } from "@/redux/features/auction";
+import Timer from "../Timer";
+import Bookmark from "@/assets/icons/bookmark.svg";
+import Bookmark_check from "@/assets/icons/bookmark-check.svg";
+import axios from "axios";
 
 const Card = ({ data }: any) => {
+  const handleWishlist = async () => {
+    let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+    let auctionId = data._id;
+    let isWishlist = data.isWishlist;
+    try {
+      if (isWishlist) {
+        await axios
+          .delete(
+            `https://auction-api-4.vercel.app/wishlist/${userId}/${auctionId}`
+          )
+          .then((res) => {
+            console.log(res);
+          });
+        alert("Auction has been removed from your wishlist");
+      } else {
+        await axios.post(`https://auction-api-4.vercel.app/wishlist/`, {
+          idCustomer: userId,
+          idAuction: auctionId,
+        });
+        alert("Auction has been added to your wishlist");
+      }
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
-      <div className="flex flex-col rounded-lg w-80 h-96 bg-neutral-900 bg-opacity-50">
+      <div className="relative flex flex-col rounded-lg w-80 h-96 bg-neutral-900 bg-opacity-50">
+        <button
+          onClick={handleWishlist}
+          className="absolute top-2 left-2 rounded-full p-2 aspect-square bg-neutral-700/[0.5]"
+        >
+          <Image
+            src={data.isWishlist ? Bookmark_check : Bookmark}
+            width={20}
+            height={20}
+            alt=""
+            className="robject-cover aspect-square"
+          />
+        </button>
         <Image
           src={data.idPainting?.image || ""}
           alt=""
@@ -43,7 +83,7 @@ const Card = ({ data }: any) => {
               <div className="flex flex-row justify-end">
                 <Image src={Clock} alt="" width={14} className="mr-1" />
                 <p className="font-sarala text-sm text-neutral-100">
-                  12 : 08 : 25
+                  <Timer timer={data.timeLeft} />
                 </p>
               </div>
             </div>
