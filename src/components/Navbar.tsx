@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
+import { usePathname } from "next/navigation";
+
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Cart from "@/assets/icons/cart.svg";
 import Redeye from "@/assets/icons/redeye.svg";
@@ -18,6 +20,7 @@ const Navbar = () => {
   );
   const router = useRouter();
   const dispatch = useDispatch();
+  const pathname = usePathname();
 
   const [isShow, setIsShow] = React.useState(false);
 
@@ -47,15 +50,15 @@ const Navbar = () => {
                   <p className="text-neutral-100">Rp{user?.balance}</p>
                   <p className="text-neutral-500">@{user?.username}</p>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-2 items-center">
                   <Link href="/wishlist">
-                    <Image src={Bookmark} alt="" width={32} />
+                    <Image src={Bookmark} alt="" width={14} />
                   </Link>
                   <Link href="/cart">
-                    <Image src={Cart} alt="" width={32} />
+                    <Image src={Cart} alt="" width={24} />
                   </Link>
                   <Link href="/wishlist">
-                    <Image src={Redeye} alt="" width={32} />
+                    <Image src={Redeye} alt="" width={24} />
                   </Link>
                 </div>
               </div>
@@ -65,6 +68,7 @@ const Navbar = () => {
                 onClick={(e) => {
                   setActive("live-auction");
                   dispatch(setNavbar("live-auction"));
+                  if (pathname !== "/") router.push("/");
                 }}
                 className={`${
                   active == "live-auction"
@@ -76,8 +80,9 @@ const Navbar = () => {
               </button>
               <button
                 onClick={(e) => {
-                  setActive("coming-soon");
-                  dispatch(setNavbar("coming-soon"));
+                  setActive("live-auction");
+                  dispatch(setNavbar("live-auction"));
+                  if (pathname !== "/") router.push("/");
                 }}
                 className={`${
                   active == "coming-soon"

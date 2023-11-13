@@ -2,16 +2,15 @@
 
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import Card from "./Card";
+import Card from "@/components/Home/Card";
 import { useSelector } from "react-redux";
 
 export default function ListCard() {
   const [fetchStatus, setFetchStatus] = useState(false);
   const [listAuction, setListAuction] = useState([] as any[]);
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState({} as any);
 
-  const navbar = useSelector((state: any) => state.navbar.value);
+  const [user, setUser] = React.useState({} as any);
 
   useEffect(() => {
     if (!localStorage.getItem("user")) {
@@ -20,17 +19,13 @@ export default function ListCard() {
       setUser(JSON.parse(localStorage.getItem("user") || "{}"));
       let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
       if (!fetchStatus) {
-        fetchData(navbar, userId);
+        fetchData(userId);
         setFetchStatus(true);
       }
     }
   }, []);
 
-  useEffect(() => {
-    if (navbar != "") fetchData(navbar, user._id);
-  }, [navbar]);
-
-  const fetchData = async (navbar: any, userId: any) => {
+  const fetchData = async (userId: any) => {
     setIsLoading(true);
     setListAuction([]);
     let dataTemp = [] as any[];
@@ -39,17 +34,7 @@ export default function ListCard() {
       await axios
         .get("https://auction-api-4.vercel.app/auction/")
         .then((res) => {
-          if (navbar != "") {
-            let data = res.data;
-            if (navbar == "live-auction") {
-              data = data.filter((item: any) => item.status == "live");
-            } else if (navbar == "coming-soon") {
-              data = data.filter((item: any) => item.status == "coming-soon");
-            }
-            dataTemp = data;
-          } else {
-            dataTemp = res.data;
-          }
+          dataTemp = res.data;
         });
 
       await axios
@@ -68,6 +53,8 @@ export default function ListCard() {
         item.isWishlist = isWishlist;
       });
 
+      dataTemp = dataTemp.filter((item: any) => item.isWishlist == true);
+
       setListAuction(dataTemp);
 
       setIsLoading(false);
@@ -79,13 +66,21 @@ export default function ListCard() {
   return (
     <>
       {!isLoading ? (
-        listAuction.map((data, index) => {
-          return (
-            <div key={index}>
-              <Card data={data} />;
-            </div>
-          );
-        })
+        listAuction.length > 0 ? (
+          listAuction.map((data, index) => {
+            return (
+              <div key={index}>
+                <Card data={data} />;
+              </div>
+            );
+          })
+        ) : (
+          <div className="w-screen flex justify-center items-center h-1/2">
+            <p className="text-2xl text-neutral-700">
+              You don't have any wishlist
+            </p>
+          </div>
+        )
       ) : (
         <div className="w-screen flex justify-center items-center h-1/2">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-neutral-900"></div>

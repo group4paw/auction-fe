@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Bookmark from "@/assets/icons/bookmark.svg";
+import Timer from "../Timer";
 
 export default function AuctionCardDetail({ data }: any) {
   return (
@@ -67,7 +68,9 @@ export default function AuctionCardDetail({ data }: any) {
             </div>
             <div>
               <p className="text-[14px] text-neutral-500">Auction Ends In</p>
-              <p className="text-[20px] text-neutral-100">12 : 08 : 25</p>
+              <p className="text-[20px] text-neutral-100">
+                <Timer timer={data.timeLeft} />
+              </p>
             </div>
           </div>
           <button className="w-full bg-blue-500 py-2 text-neutral-100 rounded-xl mt-2">
