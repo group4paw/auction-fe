@@ -3,16 +3,17 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { setNavbar } from "@/redux/features/navbar";
+import { useRouter } from "next/navigation";
 
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Cart from "@/assets/icons/cart.svg";
 import Redeye from "@/assets/icons/redeye.svg";
 import Hamburger from "@/assets/icons/hamburger.svg";
 import Arrow from "@/assets/icons/arrow-right.svg";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { setNavbar } from "@/redux/features/navbar";
-import { useRouter } from "next/navigation";
+import EasyBid from "@/assets/logo/EasyBid.svg";
 
 const Navbar = () => {
   const [active, setActive] = React.useState(
@@ -63,41 +64,49 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <div className="font-sarala border-2 border-neutral-900 px-1.5 py-1.5 flex lg:rounded-3xl rounded-2xl">
+            <div className="font-sarala border-2 border-neutral-900 px-1 py-1 lg:px-1.5 lg:py-1.5 flex lg:rounded-3xl rounded-2xl">
               <button
                 onClick={(e) => {
                   setActive("live-auction");
                   dispatch(setNavbar("live-auction"));
-                  if (pathname !== "/") router.push("/");
+                  if (pathname !== "/buy") router.push("/buy");
                 }}
                 className={`${
                   active == "live-auction"
                     ? "bg-pink-700 text-neutral-100"
                     : "bg-transparent text-neutral-700"
-                } py-1 px-2 lg:py-2 lg:px-5 lg:rounded-2xl rounded-xl`}
+                } py-1 px-2 lg:py-2 lg:px-5 lg:rounded-2xl rounded-xl text-[12px] lg:text-[16px]`}
               >
                 Live Auction
               </button>
               <button
                 onClick={(e) => {
-                  setActive("live-auction");
-                  dispatch(setNavbar("live-auction"));
-                  if (pathname !== "/") router.push("/");
+                  setActive("coming-soon");
+                  dispatch(setNavbar("coming-soon"));
+                  if (pathname !== "/buy") router.push("/buy");
                 }}
                 className={`${
                   active == "coming-soon"
                     ? "bg-pink-700 text-neutral-100"
                     : "bg-transparent text-neutral-700"
-                } py-1 px-2 lg:py-2 lg:px-5  lg:rounded-2xl rounded-xl`}
+                } py-1 px-2 lg:py-2 lg:px-5  lg:rounded-2xl rounded-xl text-[12px] lg:text-[16px]`}
               >
                 Coming Soon
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <Link href="/">
-                <h3 className="font-staatliches text-white lg:text-[59.72px] text-[28px]">
-                  EASYBID
-                </h3>
+              <Link
+                href="/buy"
+                onClick={() => {
+                  dispatch(setNavbar(""));
+                }}
+              >
+                <Image
+                  src={EasyBid}
+                  alt="Logo EasyBid"
+                  sizes="100vw"
+                  className="w-[80%] h-auto lg:w-full lg:h-auto"
+                />
               </Link>
               <Image
                 src={Hamburger}

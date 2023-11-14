@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Timer from "../Timer";
+import Clock from "@/assets/icons/clock.svg";
 
 export default function AuctionCardDetail({ data }: any) {
   return (
@@ -64,12 +65,19 @@ export default function AuctionCardDetail({ data }: any) {
           <div className="flex justify-between">
             <div>
               <p className="text-[14px] text-neutral-500">Highest bid</p>
-              <p className="text-[20px] text-neutral-100">{data.highestBid}</p>
+              <p className="text-[20px] text-neutral-100">
+                Rp{data.highestBid}
+              </p>
             </div>
             <div>
-              <p className="text-[14px] text-neutral-500">Auction Ends In</p>
-              <div className="text-[20px] text-neutral-100">
-                <Timer timer={data.timeLeft} />
+              <p className="text-[14px] text-neutral-500 text-right">
+                Auction Ends In
+              </p>
+              <div className="flex flex-row justify-end">
+                <Image src={Clock} alt="" width={14} className="mr-1" />
+                <p className="font-sarala text-[20px] text-neutral-100">
+                  <Timer timer={data.timeLeft} />
+                </p>
               </div>
             </div>
           </div>
