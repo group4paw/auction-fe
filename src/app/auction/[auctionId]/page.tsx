@@ -5,12 +5,12 @@ import AuctionCardDetail from "@/components/Auction/Card";
 import AuctionDetailComp from "@/components/Auction/Details";
 import { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import NotFoundPage from "@/app/not-found";
 
 export default function AuctionDetail() {
   const [fetchStatus, setFetchStatus] = useState(false);
   const [dataAuction, setDataAuction] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   const pathname = usePathname();
 
   useEffect(() => {
@@ -28,11 +28,11 @@ export default function AuctionDetail() {
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           setDataAuction(res[0]);
           setIsLoading(false);
         });
     } catch (err) {
+      setIsLoading(false);
       console.log(err);
     }
   };
@@ -40,13 +40,17 @@ export default function AuctionDetail() {
     <>
       {!isLoading ? (
         <>
-          <div className="px-5 lg:px-28 mt-9">
-            <div className="flex lg:flex-row flex-col mb-14">
-              <AuctionCardDetail data={dataAuction} />
-              <AuctionActivityComp data={dataAuction} />
+          {dataAuction.length != 0 ? (
+            <div className="px-5 lg:px-28 mt-9">
+              <div className="flex lg:flex-row flex-col mb-14">
+                <AuctionCardDetail data={dataAuction} />
+                <AuctionActivityComp data={dataAuction} />
+              </div>
+              <AuctionDetailComp data={dataAuction} />
             </div>
-            <AuctionDetailComp data={dataAuction} />
-          </div>
+          ) : (
+            NotFoundPage()
+          )}
         </>
       ) : (
         <div className="w-screen flex justify-center items-center h-1/2 my-5">
