@@ -55,7 +55,7 @@ const config: Config = {
       shade: {
         100: "#2C3036",
         300: "#23252C",
-        500: "#090A0A",
+        500: "#23252C",
       },
       white: "#FFFFFF",
     },

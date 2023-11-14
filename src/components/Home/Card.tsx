@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Clock from "@/assets/icons/clock.svg";
 import Timer from "../Timer";
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Bookmark_check from "@/assets/icons/bookmark-check.svg";
 import axios from "axios";
+import Clock from "@/assets/icons/clock.svg";
 
 const Card = ({ data }: any) => {
   const handleWishlist = async () => {
@@ -91,7 +91,7 @@ const Card = ({ data }: any) => {
           {data.status === "live" ? (
             <button
               onClick={() => {
-                window.location.href = `/auction/${data._id}`;
+                window.location.href = `/buy/auction/${data._id}`;
               }}
               className="bg-blue-500 active:bg-blue-600 focus:ring focus:ring-blue-300 text-white font-bold rounded-xl h-8 w-full mb-3"
             >
