@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Bookmark from "@/assets/icons/bookmark.svg";
-import Timer from "../Timer";
+import Timer from "../../Timer";
 import Clock from "@/assets/icons/clock.svg";
 
 export default function AuctionCardDetail({ data }: any) {

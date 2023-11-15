@@ -3,7 +3,7 @@
 import "@/app/globals.css";
 
 import { Staatliches, Sarala } from "next/font/google";
-import Navbar from "@/components/NavbarBuy";
+import Navbar from "@/components/Buy/NavbarBuy";
 import { Providers } from "@/redux/provider";
 import { usePathname } from "next/navigation";
 

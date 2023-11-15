@@ -1,8 +1,8 @@
 "use client";
 
-import AuctionActivityComp from "@/components/Auction/Activity";
-import AuctionCardDetail from "@/components/Auction/Card";
-import AuctionDetailComp from "@/components/Auction/Details";
+import AuctionActivityComp from "@/components/Buy/Auction/Activity";
+import AuctionCardDetail from "@/components/Buy/Auction/Card";
+import AuctionDetailComp from "@/components/Buy/Auction/Details";
 import { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import NotFoundPage from "@/app/not-found";

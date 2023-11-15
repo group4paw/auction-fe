@@ -1,4 +1,4 @@
-import ActivityCard from "@/components/Activity/Card";
+import ActivityCard from "@/components/Buy/Activity/Card";
 
 export default function Activity() {
   return (

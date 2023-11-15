@@ -1,6 +1,6 @@
 "use client";
 
-import PreviewCard from "@/components/Home/Card";
+import PreviewCard from "@/components/Buy/Home/Card";
 import { logIn } from "@/redux/features/auth-slice";
 import axios from "axios";
 import React, { useEffect, useState } from "react";

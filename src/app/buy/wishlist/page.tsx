@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ListCard from "@/components/Wishlist/ListCard";
+import ListCard from "@/components/Buy/Wishlist/ListCard";
 
 export const metadata: Metadata = {
   title: "Wishlist | Easybid",

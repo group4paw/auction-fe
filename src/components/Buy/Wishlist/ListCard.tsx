@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import Card from "@/components/Home/Card";
+import Card from "@/components/Buy/Home/Card";
 import { useSelector } from "react-redux";
 
 export default function ListCard() {
