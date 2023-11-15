@@ -7,25 +7,34 @@ import { useSelector } from "react-redux";
 
 export default function ListCard() {
   const [fetchStatus, setFetchStatus] = useState(false);
-  const [listAuction, setListAuction] = useState([]);
+  const [listAuction, setListAuction] = useState([] as any[]);
   const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState({} as any);
 
   const navbar = useSelector((state: any) => state.navbar.value);
 
   useEffect(() => {
-    if (!fetchStatus) {
-      fetchData(navbar);
+    if (!localStorage.getItem("user")) {
       setFetchStatus(true);
+    } else {
+      setUser(JSON.parse(localStorage.getItem("user") || "{}"));
+      let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+      if (!fetchStatus) {
+        fetchData(navbar, userId);
+        setFetchStatus(true);
+      }
     }
   }, []);
 
   useEffect(() => {
-    if (navbar != "") fetchData(navbar);
+    if (navbar != "") fetchData(navbar, user._id);
   }, [navbar]);
 
-  const fetchData = async (navbar: any) => {
+  const fetchData = async (navbar: any, userId: any) => {
     setIsLoading(true);
     setListAuction([]);
+    let dataTemp = [] as any[];
+    let wishlist = [] as any[];
     try {
       await axios
         .get("https://auction-api-4.vercel.app/auction/")
@@ -37,15 +46,31 @@ export default function ListCard() {
             } else if (navbar == "coming-soon") {
               data = data.filter((item: any) => item.status == "coming-soon");
             }
-            console.log("navbar", data);
-            setListAuction(data);
-            setIsLoading(false);
+            dataTemp = data;
           } else {
-            console.log("no nav", res.data);
-            setListAuction(res.data);
-            setIsLoading(false);
+            dataTemp = res.data;
           }
         });
+
+      await axios
+        .get("https://auction-api-4.vercel.app/wishlist/" + userId)
+        .then((res) => {
+          wishlist = res.data;
+        });
+
+      dataTemp.forEach((item: any) => {
+        let isWishlist = false;
+        wishlist.forEach((wish: any) => {
+          if (item._id == wish.idAuction) {
+            isWishlist = true;
+          }
+        });
+        item.isWishlist = isWishlist;
+      });
+
+      setListAuction(dataTemp);
+
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
