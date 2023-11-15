@@ -1,45 +1,91 @@
+"use client";
+
 import Refresh from "@/assets/icons/refresh.svg";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
 export default function AuctionActivityComp({ data }: any) {
+  const [bidActivity, setBidActivity] = useState([]) as any[];
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState(false);
+
+  useEffect(() => {
+    if (!status) {
+      fetchActivity();
+    }
+  }, [data]);
+
+  const fetchActivity = async () => {
+    setIsLoading(true);
+    setBidActivity([]);
+    try {
+      await fetch(`https://auction-api-4.vercel.app/bid/${data._id}`)
+        .then((res) => res.json())
+        .then((res) => {
+          res.map((bid: any) => {
+            let date = new Date(bid.bidDate);
+            bid.bidDate = date.toLocaleString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            bid.bidDate = bid.bidDate.replace("at", "|");
+          });
+          console.log("bid", res);
+          setBidActivity(res);
+          setIsLoading(false);
+        });
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
+    setStatus(true);
+  };
+
   return (
     <div className="flex-col ml-0 lg:ml-8">
       <div className="flex grow  justify-between items-start mb-4">
         <p className="text-[16px] font-bold text-white">Activity</p>
         <Image src={Refresh} alt="refresh" width={20} height={20} />
       </div>
-      <div className="flex flex-col gap-4">
-        <div className="flex items-start gap-3">
-          <Image
-            src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=2662&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            width={32}
-            height={32}
-            alt=""
-            className="rounded-full object-cover aspect-square"
-          />
-          <div className="flex flex-col text-[14px]">
-            <p className="text-neutral-100">
-              @leonelcikoko outbid @gynosiatu with a bid of Rp 325.998.000{" "}
-            </p>
-            <p className="text-neutral-500">October 12, 2023 | 09:24 </p>
-          </div>
+      {bidActivity.length != 0 ? (
+        <div className="flex flex-col gap-4 w-auto lg:w-[20vw]">
+          {bidActivity.map((bid: any, index: number) => (
+            <div className="flex items-start gap-3">
+              <Image
+                src={bid.bidder.image}
+                width={32}
+                height={32}
+                alt=""
+                className="rounded-full object-cover aspect-square"
+              />
+              <div className="flex flex-col text-[14px]">
+                {bid[index + 1] ? (
+                  <p className="text-neutral-100">
+                    @{bid.bidder.username} outbid @
+                    {bid[index + 1].bidder.username} with a bid of Rp{" "}
+                    {bid.amount}
+                  </p>
+                ) : (
+                  <p className="text-neutral-100 ">
+                    <span className="font-bold">@{bid.bidder.username}</span>{" "}
+                    bid Rp <span className="font-bold">{bid.amount}</span>
+                  </p>
+                )}
+                <p className="text-neutral-500">{bid.bidDate}</p>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="flex items-start gap-3">
-          <Image
-            src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            width={32}
-            height={32}
-            alt=""
-            className="rounded-full object-cover aspect-square"
-          />
-          <div className="flex flex-col text-[14px]">
-            <p className="text-neutral-100">
-              @gynosiatu outbid @axeliavonti with a bid of Rp 320.455.000
-            </p>
-            <p className="text-neutral-500">October 12, 2023 | 09:24</p>
-          </div>
+      ) : (
+        <div className="font-sarala flex justify-center items-center">
+          <p className="text-sm text-white">
+            There is no activity yet, be the first one to bid!
+          </p>
         </div>
-      </div>
+      )}
     </div>
   );
 }
