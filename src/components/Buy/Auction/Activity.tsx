@@ -53,7 +53,7 @@ export default function AuctionActivityComp({ data }: any) {
       {bidActivity.length != 0 ? (
         <div className="flex flex-col gap-4 w-auto lg:w-[20vw]">
           {bidActivity.map((bid: any, index: number) => (
-            <div className="flex items-start gap-3">
+            <div key={index} className="flex items-start gap-3">
               <Image
                 src={bid.bidder.image}
                 width={32}
