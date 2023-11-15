@@ -20,7 +20,9 @@ export default function AuctionDetail() {
     (async () => {
       setIsLoading(true);
       try {
-        await fetch(`https://auction-api-4.vercel.app/auction/${pathname.split("/")[3]}`)
+        await fetch(
+          `https://auction-api-4.vercel.app/auction/${pathname.split("/")[3]}`
+        )
           .then((res) => res.json())
           .then((res) => {
             setDataAuction(res[0]);

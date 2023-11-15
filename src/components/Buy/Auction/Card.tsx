@@ -2,8 +2,73 @@ import Image from "next/image";
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Timer from "../../Timer";
 import Clock from "@/assets/icons/clock.svg";
+import Bookmark_check from "@/assets/icons/bookmark-check.svg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Modal from "@/components/Modal";
 
 export default function AuctionCardDetail({ data }: any) {
+  const [modal, setModal] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+      fetchInfo(userId);
+    }
+  }, [data]);
+
+  const fetchInfo = async (userId: any) => {
+    await axios
+      .get("https://auction-api-4.vercel.app/wishlist/" + userId)
+      .then((res) => {
+        let wishlist = res.data;
+        let isWishlist = false;
+        wishlist.forEach((wish: any) => {
+          if (data._id == wish.idAuction) {
+            isWishlist = true;
+          }
+        });
+        data.isWishlist = isWishlist;
+      });
+  };
+
+  const handleWishlist = async () => {
+    let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+    let auctionId = data._id;
+    let isWishlist = data.isWishlist;
+
+    try {
+      if (isWishlist) {
+        await axios
+          .delete(
+            `https://auction-api-4.vercel.app/wishlist/${userId}/${auctionId}`
+          )
+          .then((res) => {
+            console.log(res);
+          });
+        alert("Auction has been removed from your wishlist");
+      } else {
+        await axios.post(`https://auction-api-4.vercel.app/wishlist/`, {
+          idCustomer: userId,
+          idAuction: auctionId,
+        });
+        alert("Auction has been added to your wishlist");
+      }
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleClickWishlist = () => {
+    if (data.isWishlist) {
+      setModal(true);
+    } else handleWishlist();
+  };
+
+  const cancel = () => {
+    setModal(false);
+  };
+
   return (
     <div className="w-full lg:w-[80%] flex flex-col lg:flex-row rounded-xl lg:rounded-2xl overflow-hidden font-sarala mb-10 lg:mb-0">
       <Image
@@ -45,13 +110,18 @@ export default function AuctionCardDetail({ data }: any) {
               </div>
             </div>
             <div className="flex items-center justify-center bg-neutral-700 rounded-full w-[42px] h-[42px] aspect-square cursor-pointer">
-              <Image
-                src={Bookmark}
-                width={24}
-                height={24}
-                alt=""
-                className="rounded-full object-cover aspect-square"
-              />
+              <button
+                onClick={handleClickWishlist}
+                className="rounded-full p-2 aspect-square bg-neutral-700/[0.5]"
+              >
+                <Image
+                  src={data.isWishlist ? Bookmark_check : Bookmark}
+                  width={20}
+                  height={20}
+                  alt=""
+                  className="robject-cover aspect-square"
+                />
+              </button>
             </div>
           </div>
           <h6 className="text-[28px] text-neutral-100 my-5 font-bold">
@@ -86,6 +156,17 @@ export default function AuctionCardDetail({ data }: any) {
           </button>
         </div>
       </div>
+      {modal ? (
+        <Modal
+          cancel={cancel}
+          confirm={handleWishlist}
+          content="Are you sure want to remove this auction from your wishlist?"
+          isCancel={true}
+          confirmText="Yes"
+          cancelText="No"
+          title="Remove Wishlist"
+        />
+      ) : null}
     </div>
   );
 }

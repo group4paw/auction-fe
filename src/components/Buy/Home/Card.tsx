@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Timer from "../../Timer";
+import Link from "next/link";
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Bookmark_check from "@/assets/icons/bookmark-check.svg";
 import axios from "axios";
