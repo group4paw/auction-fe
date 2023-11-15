@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Timer from "../../Timer";
 import Bookmark from "@/assets/icons/bookmark.svg";
