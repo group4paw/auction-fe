@@ -17,6 +17,7 @@ import EasyBid from "@/assets/logo/EasyBid.svg";
 import Logout from "@/assets/icons/logout.svg";
 import { logOut } from "@/redux/features/auth-slice";
 import axios from "axios";
+import Modal from "../Modal";
 
 const Navbar = () => {
   const [active, setActive] = useState(
@@ -31,6 +32,7 @@ const Navbar = () => {
   const [user, setUser] = useState({} as any);
   const [countWislist, setCountWishlist] = useState(0);
   const [countActivity, setCountActivity] = useState(0);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem("user")) {
@@ -64,6 +66,10 @@ const Navbar = () => {
     router.push("/login");
   };
 
+  const cancel = () => {
+    setModal(false);
+  };
+
   return (
     <>
       <nav>
@@ -83,7 +89,7 @@ const Navbar = () => {
                   <p className="text-neutral-500">@{user?.username}</p>
                 </div>
                 <div className="flex gap-2 items-center">
-                  <Link href="/wishlist" className="relative">
+                  <Link href="/buy/wishlist" className="relative">
                     {countWislist > 0 && (
                       <div className="absolute top-[-5px] right-[-5px] w-[12px] h-[12x] aspect-square text-center  text-[8px] text-white rounded-full bg-[#F31260]">
                         {countWislist}
@@ -91,10 +97,10 @@ const Navbar = () => {
                     )}
                     <Image src={Bookmark} alt="" width={14} />
                   </Link>
-                  <Link href="/cart">
+                  <Link href="/buy/cart">
                     <Image src={Cart} alt="" width={24} />
                   </Link>
-                  <Link href="/activity" className="relative">
+                  <Link href="/buy/activity" className="relative mr-1">
                     {countActivity > 0 && (
                       <div className="absolute top-[-2px] right-[-2px] w-[12px] h-[12x] aspect-square text-center  text-[8px] text-white rounded-full bg-[#F31260]">
                         {countActivity}
@@ -102,7 +108,12 @@ const Navbar = () => {
                     )}
                     <Image src={Redeye} alt="" width={24} />
                   </Link>
-                  <div onClick={logout}>
+                  <div
+                    onClick={() => {
+                      setModal(true);
+                    }}
+                    className="cursor-pointer"
+                  >
                     <Image src={Logout} alt="" width={20} />
                   </div>
                 </div>
@@ -138,18 +149,19 @@ const Navbar = () => {
                 Coming Soon
               </button>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="w-auto lg:w-[20%]  h-full flex justify-end items-center gap-2">
               <Link
                 href="/buy"
                 onClick={() => {
                   dispatch(setNavbar(""));
                 }}
+                className="lg:w-7/12 h-auto"
               >
                 <Image
                   src={EasyBid}
                   alt="Logo EasyBid"
                   sizes="100vw"
-                  className="w-[80%] h-auto lg:w-full lg:h-auto"
+                  className="w-[80%] h-auto lg:w-full lg:h-auto object-contain"
                 />
               </Link>
               <Image
@@ -182,7 +194,7 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <Link href="/wishlist">
+            <Link href="/buy/wishlist">
               <div className="text-neutral-500 text-[16px]  flex justify-between">
                 <div className="flex gap-4 items-center">
                   <Image src={Bookmark} alt="" width={32} />
@@ -191,7 +203,7 @@ const Navbar = () => {
                 <Image src={Arrow} alt="" width={16} />
               </div>
             </Link>
-            <Link href="/cart">
+            <Link href="/buy/cart">
               <div className="text-neutral-500 text-[16px] my-3 flex justify-between">
                 <div className="flex gap-4 items-center">
                   <Image src={Cart} alt="" width={32} />
@@ -200,7 +212,7 @@ const Navbar = () => {
                 <Image src={Arrow} alt="" width={16} />
               </div>
             </Link>
-            <Link href="/wishlist">
+            <Link href="/buy/wishlist">
               <div className="text-neutral-500 text-[16px] flex justify-between">
                 <div className="flex gap-4 items-center">
                   <Image src={Redeye} alt="" width={32} />
@@ -212,6 +224,17 @@ const Navbar = () => {
           </div>
         )}
       </nav>
+      {modal ? (
+        <Modal
+          cancel={cancel}
+          confirm={logout}
+          title={"Confirm"}
+          content={"Are you sure you want to log out from your account?"}
+          isCancel
+          confirmText={"Yes, log out"}
+          cancelText={"No"}
+        />
+      ) : null}
     </>
   );
 };
