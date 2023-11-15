@@ -58,6 +58,7 @@ const config: Config = {
         500: "#23252C",
       },
       white: "#FFFFFF",
+	  transparent: "rgba(0,0,0,0)"
     },
   },
   plugins: [],
