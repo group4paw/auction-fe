@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ListCard from "@/components/Home/ListCard";
+import ListCard from "@/components/Buy/Home/ListCard";
 import { useSelector } from "react-redux";
 
 export const metadata: Metadata = {

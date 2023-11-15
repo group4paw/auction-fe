@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,24 +14,55 @@ import Redeye from "@/assets/icons/redeye.svg";
 import Hamburger from "@/assets/icons/hamburger.svg";
 import Arrow from "@/assets/icons/arrow-right.svg";
 import EasyBid from "@/assets/logo/EasyBid.svg";
+import Logout from "@/assets/icons/logout.svg";
+import { logOut } from "@/redux/features/auth-slice";
+import axios from "axios";
 
 const Navbar = () => {
-  const [active, setActive] = React.useState(
+  const [active, setActive] = useState(
     useSelector((state: any) => state.navbar.value)
   );
   const router = useRouter();
   const dispatch = useDispatch();
   const pathname = usePathname();
 
-  const [isShow, setIsShow] = React.useState(false);
+  const [isShow, setIsShow] = useState(false);
 
-  const [user, setUser] = React.useState({} as any);
+  const [user, setUser] = useState({} as any);
+  const [countWislist, setCountWishlist] = useState(0);
+  const [countActivity, setCountActivity] = useState(0);
 
   useEffect(() => {
     if (!localStorage.getItem("user")) {
       router.push("/login");
     } else setUser(JSON.parse(localStorage.getItem("user") || "{}"));
   }, []);
+
+  useEffect(() => {
+    if (user._id) {
+      fetchInfo();
+    }
+  }, [user]);
+
+  const fetchInfo = async () => {
+    try {
+      await axios
+        .get("https://auction-api-4.vercel.app/customer/info/" + user.id)
+        .then((res) => {
+          let result = res.data.data;
+          setCountWishlist(result.countWishlist);
+          setCountActivity(result.countBid);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    dispatch(logOut());
+    router.push("/login");
+  };
 
   return (
     <>
@@ -52,15 +83,28 @@ const Navbar = () => {
                   <p className="text-neutral-500">@{user?.username}</p>
                 </div>
                 <div className="flex gap-2 items-center">
-                  <Link href="/wishlist">
+                  <Link href="/wishlist" className="relative">
+                    {countWislist > 0 && (
+                      <div className="absolute top-[-5px] right-[-5px] w-[12px] h-[12x] aspect-square text-center  text-[8px] text-white rounded-full bg-[#F31260]">
+                        {countWislist}
+                      </div>
+                    )}
                     <Image src={Bookmark} alt="" width={14} />
                   </Link>
                   <Link href="/cart">
                     <Image src={Cart} alt="" width={24} />
                   </Link>
-                  <Link href="/wishlist">
+                  <Link href="/activity" className="relative">
+                    {countActivity > 0 && (
+                      <div className="absolute top-[-2px] right-[-2px] w-[12px] h-[12x] aspect-square text-center  text-[8px] text-white rounded-full bg-[#F31260]">
+                        {countActivity}
+                      </div>
+                    )}
                     <Image src={Redeye} alt="" width={24} />
                   </Link>
+                  <div onClick={logout}>
+                    <Image src={Logout} alt="" width={20} />
+                  </div>
                 </div>
               </div>
             </div>
