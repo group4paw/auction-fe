@@ -14,28 +14,26 @@ export default function AuctionDetail() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!fetchStatus) {
-      fetchData();
-      setFetchStatus(true);
-    }
-  }, [fetchStatus]);
+    if (fetchStatus) return;
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    try {
-      await fetch(
-        `https://auction-api-4.vercel.app/auction/${pathname.split("/")[3]}`
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          setDataAuction(res[0]);
-          setIsLoading(false);
-        });
-    } catch (err) {
-      setIsLoading(false);
-      console.log(err);
-    }
-  };
+    // fetch data
+    (async () => {
+      setIsLoading(true);
+      try {
+        await fetch(`https://auction-api-4.vercel.app/auction/${pathname.split("/")[3]}`)
+          .then((res) => res.json())
+          .then((res) => {
+            setDataAuction(res[0]);
+            setIsLoading(false);
+          });
+      } catch (err) {
+        setIsLoading(false);
+        console.log(err);
+      }
+    })();
+    setFetchStatus(true);
+  }, [fetchStatus, pathname]);
+
   return (
     <>
       {!isLoading ? (

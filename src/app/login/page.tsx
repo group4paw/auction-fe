@@ -19,7 +19,7 @@ const LoginPage = () => {
 		if (localStorage.getItem("user")) {
 			router.push("/", { scroll: false });
 		}
-	}, []);
+	});
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
