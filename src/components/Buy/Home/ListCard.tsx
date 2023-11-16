@@ -68,6 +68,13 @@ export default function ListCard() {
         item.isWishlist = isWishlist;
       });
 
+      // sort data by status
+      dataTemp.sort((a: any, b: any) => {
+        if (a.status == "live" && b.status == "coming-soon") return -1;
+        else if (a.status == "coming-soon" && b.status == "live") return 1;
+        else return 0;
+      });
+
       setListAuction(dataTemp);
 
       setIsLoading(false);

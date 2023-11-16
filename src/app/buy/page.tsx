@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import ListCard from "@/components/Buy/Home/ListCard";
 import { useSelector } from "react-redux";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Home | Easybid",

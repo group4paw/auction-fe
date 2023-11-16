@@ -42,9 +42,7 @@ export default function AuctionCardDetail({ data }: any) {
           .delete(
             `https://auction-api-4.vercel.app/wishlist/${userId}/${auctionId}`
           )
-          .then((res) => {
-            console.log(res);
-          });
+          .then((res) => {});
         alert("Auction has been removed from your wishlist");
       } else {
         await axios.post(`https://auction-api-4.vercel.app/wishlist/`, {
@@ -70,7 +68,7 @@ export default function AuctionCardDetail({ data }: any) {
   };
 
   return (
-    <div className="w-full lg:w-[80%] flex flex-col lg:flex-row rounded-xl lg:rounded-2xl overflow-hidden font-sarala mb-10 lg:mb-0">
+    <div className="w-full flex flex-col lg:flex-row rounded-xl lg:rounded-2xl overflow-hidden font-sarala mb-10 lg:mb-0">
       <Image
         src={data.idPainting?.image || ""}
         alt=""
@@ -140,14 +138,14 @@ export default function AuctionCardDetail({ data }: any) {
               </p>
             </div>
             <div>
-              <p className="text-[14px] text-neutral-500 text-right">
+              <div className="text-[14x] text-neutral-500 text-right">
                 Auction Ends In
-              </p>
+              </div>
               <div className="flex flex-row justify-end">
                 <Image src={Clock} alt="" width={14} className="mr-1" />
-                <p className="font-sarala text-[20px] text-neutral-100">
+                <div className="font-sarala text-[20px] text-neutral-100">
                   <Timer timer={data.timeLeft} />
-                </p>
+                </div>
               </div>
             </div>
           </div>

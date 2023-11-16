@@ -96,7 +96,7 @@ const Card = ({ data }: any) => {
             </div>
             <div className="flex-auto text-right">
               <p className="font-sarala text-xs text-neutral-500">
-                Auction ends In
+                Auction {data.status == "live" ? "ends" : "start"} in
               </p>
               <div className="flex flex-row justify-end">
                 <Image src={Clock} alt="" width={14} className="mr-1" />

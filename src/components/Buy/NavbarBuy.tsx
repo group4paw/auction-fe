@@ -49,7 +49,7 @@ const Navbar = () => {
   const fetchInfo = async () => {
     try {
       await axios
-        .get("https://auction-api-4.vercel.app/customer/info/" + user.id)
+        .get("https://auction-api-4.vercel.app/customer/info/" + user._id)
         .then((res) => {
           let result = res.data.data;
           setCountWishlist(result.countWishlist);
