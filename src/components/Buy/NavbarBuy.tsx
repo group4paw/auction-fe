@@ -149,14 +149,15 @@ const Navbar = () => {
                 Coming Soon
               </button>
             </div>
-            <div className="w-auto lg:w-[20%]  h-full flex justify-end items-center gap-2">
-              <Link
-                href="/buy"
-                onClick={() => {
-                  dispatch(setNavbar(""));
-                }}
-                className="lg:w-7/12 h-auto"
-              >
+            <div
+              onClick={() => {
+                setActive("");
+                dispatch(setNavbar(""));
+                if (pathname !== "/buy") router.push("/buy");
+              }}
+              className="w-auto lg:w-[20%]  h-full flex justify-end items-center gap-2"
+            >
+              <Link href="/buy" className="lg:w-7/12 h-auto">
                 <Image
                   src={EasyBid}
                   alt="Logo EasyBid"

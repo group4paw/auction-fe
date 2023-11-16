@@ -27,12 +27,13 @@ export default function ListCard() {
   }, [fetchStatus, navbar]);
 
   useEffect(() => {
-    if (navbar != "") fetchData(navbar, user._id);
+    let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+    if (navbar != "") fetchData(navbar, userId);
   }, [navbar, user]);
 
   const fetchData = async (navbar: any, userId: any) => {
-    setIsLoading(true);
     setListAuction([]);
+    setIsLoading(true);
     let dataTemp = [] as any[];
     let wishlist = [] as any[];
     try {
@@ -76,7 +77,6 @@ export default function ListCard() {
       });
 
       setListAuction(dataTemp);
-
       setIsLoading(false);
     } catch (err) {
       console.log(err);
