@@ -24,11 +24,11 @@ export default function ListCard() {
         setFetchStatus(true);
       }
     }
-  }, []);
+  }, [fetchStatus, navbar]);
 
   useEffect(() => {
     if (navbar != "") fetchData(navbar, user._id);
-  }, [navbar]);
+  }, [navbar, user]);
 
   const fetchData = async (navbar: any, userId: any) => {
     setIsLoading(true);
