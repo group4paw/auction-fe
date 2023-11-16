@@ -19,19 +19,17 @@ export default function ListCard() {
     } else {
       setUser(JSON.parse(localStorage.getItem("user") || "{}"));
       let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
-      console.log("karena baru");
       if (!fetchStatus) {
         fetchData(navbar, userId);
         setFetchStatus(true);
       }
     }
-  }, [navbar]);
+  }, [fetchStatus, navbar]);
 
   useEffect(() => {
     let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
-    setListAuction([]);
-    fetchData(navbar, userId);
-  }, [navbar]);
+    if (navbar != "") fetchData(navbar, userId);
+  }, [navbar, user]);
 
   const fetchData = async (navbar: any, userId: any) => {
     setListAuction([]);
