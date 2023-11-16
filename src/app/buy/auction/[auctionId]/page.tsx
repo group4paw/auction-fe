@@ -9,7 +9,7 @@ import NotFoundPage from "@/app/not-found";
 
 export default function AuctionDetail() {
   const [fetchStatus, setFetchStatus] = useState(false);
-  const [dataAuction, setDataAuction] = useState([]);
+  const [dataAuction, setDataAuction] = useState({} as any);
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
 
@@ -41,12 +41,16 @@ export default function AuctionDetail() {
       {!isLoading ? (
         <>
           {dataAuction.length != 0 ? (
-            <div className="px-5 lg:px-28 mt-9">
+            <div className="w-full px-5 lg:px-28 mt-9">
               <div className="flex lg:flex-row flex-col mb-14">
-                <AuctionCardDetail data={dataAuction} />
-                <AuctionActivityComp data={dataAuction} />
+                <div className="w-auto lg:w-[70%]">
+                  <AuctionCardDetail data={dataAuction} />
+                  <AuctionDetailComp data={dataAuction} />
+                </div>
+                <div className="w-auto w-[30%]">
+                  <AuctionActivityComp auctionId={dataAuction._id} />
+                </div>
               </div>
-              <AuctionDetailComp data={dataAuction} />
             </div>
           ) : (
             NotFoundPage()
