@@ -3,7 +3,7 @@
 import "@/app/globals.css";
 
 import { Staatliches, Sarala } from "next/font/google";
-import Navbar from "@/components/Buy/NavbarBuy";
+import Navbar from "@/components/Seller/NavbarSell";
 import { Providers } from "@/redux/provider";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -13,10 +13,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
   if (typeof window !== "undefined") {
-    if (localStorage && localStorage.getItem("role") != "buyer") {
+    if (localStorage && localStorage.getItem("role") != "seller") {
       window.location.href = "/login";
     }
   }

@@ -18,7 +18,11 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
-      router.push("/", { scroll: false });
+      if (localStorage.getItem("role") == "buyer") {
+        router.push("/buy", { scroll: false });
+      } else {
+        router.push("/sell", { scroll: false });
+      }
     }
   });
 
@@ -31,9 +35,14 @@ const LoginPage = () => {
       })
       .then((res) => {
         console.log(res.data.customer);
-        disp(logIn({ user: res.data.customer }));
+        disp(logIn({ user: res.data.customer, role: res.data.role }));
         localStorage.setItem("user", JSON.stringify(res.data.customer));
-        router.push("/", { scroll: false });
+        localStorage.setItem("role", res.data.role);
+        if (res.data.role == "buyer") {
+          router.push("/buy");
+        } else {
+          router.push("/sell");
+        }
       })
       .catch((error) => {
         setResponse(error.response.status);

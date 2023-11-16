@@ -1,16 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import Timer from "../../Timer";
+import Link from "next/link";
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Bookmark_check from "@/assets/icons/bookmark-check.svg";
 import axios from "axios";
 import Clock from "@/assets/icons/clock.svg";
+import Modal from "@/components/Modal";
 
 const Card = ({ data }: any) => {
+  const [modal, setModal] = useState(false);
+
   const handleWishlist = async () => {
     let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
     let auctionId = data._id;
     let isWishlist = data.isWishlist;
+
     try {
       if (isWishlist) {
         await axios
@@ -34,11 +42,21 @@ const Card = ({ data }: any) => {
     }
   };
 
+  const handleClickWishlist = () => {
+    if (data.isWishlist) {
+      setModal(true);
+    } else handleWishlist();
+  };
+
+  const cancel = () => {
+    setModal(false);
+  };
+
   return (
     <>
       <div className="relative flex flex-col rounded-lg w-80 h-96 bg-neutral-900 bg-opacity-50">
         <button
-          onClick={handleWishlist}
+          onClick={handleClickWishlist}
           className="absolute top-2 left-2 rounded-full p-2 aspect-square bg-neutral-700/[0.5]"
         >
           <Image
@@ -79,7 +97,7 @@ const Card = ({ data }: any) => {
             </div>
             <div className="flex-auto text-right">
               <p className="font-sarala text-xs text-neutral-500">
-                Auction ends In
+                Auction {data.status == "live" ? "ends" : "start"} in
               </p>
               <div className="flex flex-row justify-end">
                 <Image src={Clock} alt="" width={14} className="mr-1" />
@@ -121,6 +139,17 @@ const Card = ({ data }: any) => {
           )}
         </div>
       </div>
+      {modal ? (
+        <Modal
+          cancel={cancel}
+          confirm={handleWishlist}
+          content="Are you sure want to remove this auction from your wishlist?"
+          isCancel={true}
+          confirmText="Yes"
+          cancelText="No"
+          title="Remove Wishlist"
+        />
+      ) : null}
     </>
   );
 };
