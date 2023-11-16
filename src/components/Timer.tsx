@@ -5,8 +5,6 @@ export default function Timer(props: any) {
   const targetTime = props.timer > 0 ? props.timer - 25200000 : 0;
   const [remainingTime, setRemainingTime] = useState(targetTime);
 
-  console.log(targetTime);
-
   useEffect(() => {
     const timer = setInterval(() => {
       setRemainingTime((prevTime: any) => {

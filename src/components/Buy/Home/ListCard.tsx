@@ -19,20 +19,23 @@ export default function ListCard() {
     } else {
       setUser(JSON.parse(localStorage.getItem("user") || "{}"));
       let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+      console.log("karena baru");
       if (!fetchStatus) {
         fetchData(navbar, userId);
         setFetchStatus(true);
       }
     }
-  }, []);
+  }, [navbar]);
 
   useEffect(() => {
-    if (navbar != "") fetchData(navbar, user._id);
+    let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
+    setListAuction([]);
+    fetchData(navbar, userId);
   }, [navbar]);
 
   const fetchData = async (navbar: any, userId: any) => {
-    setIsLoading(true);
     setListAuction([]);
+    setIsLoading(true);
     let dataTemp = [] as any[];
     let wishlist = [] as any[];
     try {
@@ -76,7 +79,6 @@ export default function ListCard() {
       });
 
       setListAuction(dataTemp);
-
       setIsLoading(false);
     } catch (err) {
       console.log(err);
