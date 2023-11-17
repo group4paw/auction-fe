@@ -85,7 +85,9 @@ const Navbar = () => {
               />
               <div className="font-sarala flex items-start gap-2">
                 <div>
-                  <p className="text-neutral-100">Rp{user?.balance}</p>
+                  <Link href="/buy/topup">
+                    <p className="text-neutral-100">Rp{user?.balance}</p>
+                  </Link>
                   <p className="text-neutral-500">@{user?.username}</p>
                 </div>
                 <div className="flex gap-2 items-center">

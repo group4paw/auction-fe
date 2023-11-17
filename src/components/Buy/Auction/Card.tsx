@@ -6,9 +6,12 @@ import Bookmark_check from "@/assets/icons/bookmark-check.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Modal from "@/components/Modal";
+import ModalBid from "./ModalBid";
 
 export default function AuctionCardDetail({ data }: any) {
   const [modal, setModal] = useState(false);
+  const [modalbid, setModalBid] = useState(false);
+
   useEffect(() => {
     if (localStorage.getItem("user")) {
       let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
@@ -65,6 +68,10 @@ export default function AuctionCardDetail({ data }: any) {
 
   const cancel = () => {
     setModal(false);
+  };
+
+  const cancelBid = () => {
+    setModalBid(false);
   };
 
   return (
@@ -149,7 +156,12 @@ export default function AuctionCardDetail({ data }: any) {
               </div>
             </div>
           </div>
-          <button className="w-full bg-blue-500 py-2 text-neutral-100 rounded-xl mt-2">
+          <button
+            onClick={() => {
+              setModalBid(true);
+            }}
+            className="w-full bg-blue-500 py-2 text-neutral-100 rounded-xl mt-2"
+          >
             Place a bid
           </button>
         </div>
@@ -163,6 +175,14 @@ export default function AuctionCardDetail({ data }: any) {
           confirmText="Yes"
           cancelText="No"
           title="Remove Wishlist"
+        />
+      ) : null}
+
+      {modalbid ? (
+        <ModalBid
+          cancel={cancelBid}
+          auctionId={data._id}
+          highestBid={data.highestBid}
         />
       ) : null}
     </div>
