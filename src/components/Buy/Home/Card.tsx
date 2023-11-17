@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Timer from "../../Timer";
 import Link from "next/link";
@@ -10,9 +10,13 @@ import Bookmark_check from "@/assets/icons/bookmark-check.svg";
 import axios from "axios";
 import Clock from "@/assets/icons/clock.svg";
 import Modal from "@/components/Modal";
+import Notify from "@/components/Notify";
 
 const Card = ({ data }: any) => {
   const [modal, setModal] = useState(false);
+  const [notify, setNotify] = useState(false);
+
+  useEffect(() => {}, [data]);
 
   const handleWishlist = async () => {
     let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
@@ -25,18 +29,16 @@ const Card = ({ data }: any) => {
           .delete(
             `https://auction-api-4.vercel.app/wishlist/${userId}/${auctionId}`
           )
-          .then((res) => {
-            console.log(res);
-          });
-        alert("Auction has been removed from your wishlist");
+          .then((res) => {});
+        data.isWishlist = false;
       } else {
         await axios.post(`https://auction-api-4.vercel.app/wishlist/`, {
           idCustomer: userId,
           idAuction: auctionId,
         });
-        alert("Auction has been added to your wishlist");
+        data.isWishlist = true;
+        setNotify(true);
       }
-      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -50,6 +52,10 @@ const Card = ({ data }: any) => {
 
   const cancel = () => {
     setModal(false);
+  };
+
+  const closeNotify = () => {
+    setNotify(false);
   };
 
   return (
@@ -148,6 +154,14 @@ const Card = ({ data }: any) => {
           confirmText="Yes"
           cancelText="No"
           title="Remove Wishlist"
+        />
+      ) : null}
+
+      {notify ? (
+        <Notify
+          confirm={closeNotify}
+          content="Auction has been added to your wishlist"
+          textButton="Ok"
         />
       ) : null}
     </>

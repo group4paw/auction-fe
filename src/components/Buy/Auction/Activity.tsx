@@ -34,7 +34,6 @@ export default function AuctionActivityComp({ auctionId }: any) {
             });
             bid.bidDate = bid.bidDate.replace("at", "|");
           });
-          console.log("bid", res);
           setBidActivity(res);
           setIsLoading(false);
         });

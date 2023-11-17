@@ -76,6 +76,15 @@ export default function ListCard() {
         else return 0;
       });
 
+      // sort again by timeleft
+      dataTemp.sort((a: any, b: any) => {
+        if (a.status == "live" && b.status == "live") {
+          if (a.timeLeft < b.timeLeft) return -1;
+          else if (a.timeLeft > b.timeLeft) return 1;
+          else return 0;
+        } else return 0;
+      });
+
       setListAuction(dataTemp);
       setIsLoading(false);
     } catch (err) {

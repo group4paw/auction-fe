@@ -1,19 +1,12 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
 
-const Modal = ({
-  cancel,
-  confirm,
-  content,
-  isCancel,
-  confirmText,
-  cancelText,
-  title,
-}: any) => {
+const Notify = ({ cancel, confirm, content, textButton }: any) => {
   const handleConfirm = async () => {
-    await confirm();
-    cancel();
+    setTimeout(() => {
+      confirm();
+    }, 1000);
   };
 
   return (
@@ -33,7 +26,7 @@ const Modal = ({
       >
         <>
           <div className="flex items-center px-5 h-[20%] w-full bg-neutral-900 overflow-hidden rounded-t-2xl text-neutral-300 justify-between">
-            <p>{title}</p>
+            <p>Notifications</p>
             <div onClick={cancel} className="text-[20px] cursor-pointer">
               <MdClose />
             </div>
@@ -41,19 +34,11 @@ const Modal = ({
           <div className="w-full h-[80%] px-5 py-5 flex flex-col justify-between">
             <p className=" text-neutral-900 text-[16px] font-bold">{content}</p>
             <div className="w-full flex justify-end gap-2">
-              {isCancel ? (
-                <button
-                  onClick={cancel}
-                  className="px-6 py-1 bg-shade-500 rounded-xl text-neutral-500"
-                >
-                  {cancelText}
-                </button>
-              ) : null}
               <button
                 onClick={handleConfirm}
                 className="px-5 py-1 bg-blue-500 rounded-xl text-neutral-100"
               >
-                {confirmText}
+                {textButton}
               </button>
             </div>
           </div>
@@ -63,4 +48,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default Notify;
