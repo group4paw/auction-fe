@@ -17,7 +17,7 @@ export default function AuctionCardDetail({ data }: any) {
       let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
       fetchInfo(userId);
     }
-  }, [data]);
+  });
 
   const fetchInfo = async (userId: any) => {
     await axios
