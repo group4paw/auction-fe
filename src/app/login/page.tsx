@@ -29,14 +29,14 @@ const LoginPage = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await axios
-      .post("https://auction-api-4.vercel.app/customer/signin", {
+      .post("https://auction-api-4.vercel.app/seller/signin", {
         email: email,
         password: password,
       })
       .then((res) => {
-        console.log(res.data.customer);
+        console.log(res.data.seller);
         disp(logIn({ user: res.data.customer, role: res.data.role }));
-        localStorage.setItem("user", JSON.stringify(res.data.customer));
+        localStorage.setItem("user", JSON.stringify(res.data.seller));
         localStorage.setItem("role", res.data.role);
         if (res.data.role == "buyer") {
           router.push("/buy");
@@ -57,7 +57,13 @@ const LoginPage = () => {
         <span className="absolute w-2/3 aspect-square bg-gradient-radial from-pink-500 from-0% to-transparent to-70% -z-50 -translate-x-1/2 translate-y-1/2 left-0 opacity-30" />
         <div className="max-w-sm w-full bg-shade-500 p-8 rounded-2xl">
           <div className="flex justify-center">
-            <Image src={EasyBidImg} width={0} height={44} alt="" className="flex" />
+            <Image
+              src={EasyBidImg}
+              width={0}
+              height={44}
+              alt=""
+              className="flex"
+            />
           </div>
           <form className="mt-4 space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" value="true" />
@@ -105,7 +111,9 @@ const LoginPage = () => {
             </div>
           </form>
           {response == 401 && (
-            <p className="font-sarala text-base w-full mt-3 text-alert-red">*Incorrect username or password.</p>
+            <p className="font-sarala text-base w-full mt-3 text-alert-red">
+              *Incorrect username or password.
+            </p>
           )}
         </div>
         <div className="flex flex-row justify-center mt-8 text-neutral-100 font-sarala text-base w-full">
