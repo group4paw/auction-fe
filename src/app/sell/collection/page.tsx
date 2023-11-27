@@ -1,0 +1,28 @@
+import ListCollection from "@/components/Seller/Collection/ListCollection";
+
+import type { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Collection | Easybid",
+  description: "...",
+};
+
+export default function CollectionPage() {
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-center lg:justify-between lg:px-24 py-12">
+      <div className="z-10 lg:max-w-5xl w-full  font-mono text-sm    ">
+        <div className="flex justify-end mb-10">
+          <Link href="/sell/collection/add">
+            <button className="py-2 px-5 bg-blue-500 text-neutral-100 rounded-xl text-xl">
+              Add new art +
+            </button>
+          </Link>
+        </div>
+        <div className="items-center justify-center lg:justify-around flex flex-wrap">
+          <ListCollection />
+        </div>
+      </div>
+    </main>
+  );
+}
