@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +39,18 @@ const Navbar = () => {
       router.push("/login");
     } else setUser(JSON.parse(localStorage.getItem("user") || "{}"));
 
-    setActive("active-bid");
+    if (pathname == "/sell") {
+      setActive("active-bid");
+      dispatch(setNavbar("active-bid"));
+    }
+    if (pathname == "/sell/collection") {
+      setActive("collection");
+      dispatch(setNavbar("collection"));
+    }
+    if (pathname == "/sell/order-status") {
+      setActive("order-status");
+      dispatch(setNavbar("order-status"));
+    }
   }, []);
 
   useEffect(() => {
@@ -47,6 +58,8 @@ const Navbar = () => {
       fetchInfo();
     }
   }, [user]);
+
+  useEffect(() => {}, [active]);
 
   const fetchInfo = async () => {
     try {
@@ -111,7 +124,7 @@ const Navbar = () => {
                 onClick={(e) => {
                   setActive("collection");
                   dispatch(setNavbar("collection"));
-                  if (pathname !== "/sell") router.push("/sell");
+                  router.push("/sell/collection");
                 }}
                 className={`${
                   active == "collection"

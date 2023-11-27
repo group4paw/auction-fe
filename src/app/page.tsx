@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Beranda/Navbar";
 import Hero from "@/components/Beranda/Hero";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Easybid",
