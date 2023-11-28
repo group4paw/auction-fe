@@ -6,6 +6,7 @@ import AuctionDetailComp from "@/components/Buy/Auction/Details";
 import { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import NotFoundPage from "@/app/not-found";
+import axios from "axios";
 
 export default function AuctionDetail() {
   const [fetchStatus, setFetchStatus] = useState(false);
@@ -20,12 +21,12 @@ export default function AuctionDetail() {
     (async () => {
       setIsLoading(true);
       try {
-        await fetch(
-          `https://auction-api-4.vercel.app/auction/${pathname.split("/")[3]}`
-        )
-          .then((res) => res.json())
+        await axios
+          .get(
+            `https://auction-api-4.vercel.app/auction/${pathname.split("/")[3]}`
+          )
           .then((res) => {
-            setDataAuction(res[0]);
+            setDataAuction(res.data[0]);
             setIsLoading(false);
           });
       } catch (err) {
@@ -40,7 +41,7 @@ export default function AuctionDetail() {
     <>
       {!isLoading ? (
         <>
-          {dataAuction.length != 0 ? (
+          {dataAuction ? (
             <div className="w-full px-5 lg:px-28 mt-9">
               <div className="flex lg:flex-row flex-col mb-14">
                 <div className="w-auto lg:w-[70%]">
