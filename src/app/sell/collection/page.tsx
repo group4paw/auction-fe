@@ -11,15 +11,15 @@ export const metadata: Metadata = {
 export default function CollectionPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center lg:justify-between lg:px-24 py-12">
-      <div className="z-10 lg:max-w-5xl w-full  font-mono text-sm    ">
-        <div className="flex justify-end mb-10">
+      <div className="z-10 lg:max-w-4xl w-full  font-mono text-sm    ">
+        <div className="flex lg:justify-end justify-center mb-10">
           <Link href="/sell/collection/add">
             <button className="py-2 px-5 bg-blue-500 text-neutral-100 rounded-xl text-xl">
               Add new art +
             </button>
           </Link>
         </div>
-        <div className="items-center justify-center lg:justify-around flex flex-wrap">
+        <div className="items-center justify-center lg:justify-between flex flex-wrap gap-y-5">
           <ListCollection />
         </div>
       </div>

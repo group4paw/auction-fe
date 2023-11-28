@@ -5,13 +5,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
-const AddArtComp = () => {
+const EditArtComp = ({ data }: any) => {
   const [image, setImage] = useState(null);
   const [fileImage, setFileImage] = useState(null);
-  const [notify, setNotify] = useState(false);
 
   const [listCity, setListCity] = useState([] as any);
   const [user, setUser] = useState({} as any);
+  const [form, setForm] = useState(new FormData());
+  const [notify, setNotify] = useState(false);
+  const [fetchStatus, setFetchStatus] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem("user")) {
@@ -21,6 +23,12 @@ const AddArtComp = () => {
       fetchListCity();
     }
   }, []);
+
+  useEffect(() => {
+    if (data.image) {
+      setImage(data.image);
+    }
+  }, [data]);
 
   const fetchListCity = async () => {
     try {
@@ -45,7 +53,6 @@ const AddArtComp = () => {
 
   const handleInputImage = (e: any) => {
     const file = e.target.files[0];
-    setFileImage(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -61,6 +68,10 @@ const AddArtComp = () => {
     }
   };
 
+  const closeNotify = () => {
+    setNotify(false);
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const form = document.getElementById("form") as any;
@@ -70,7 +81,7 @@ const AddArtComp = () => {
 
     // loop data
     await axios
-      .post("https://auction-api-4.vercel.app/painting/create", formData, {
+      .put("http://localhost:3000/painting/" + data._id, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -84,16 +95,12 @@ const AddArtComp = () => {
       });
   };
 
-  const closeNotify = () => {
-    setNotify(false);
-  };
-
   return (
     <>
       <form
         id="form"
         onSubmit={handleSubmit}
-        className="bg-neutral-900 bg-opacity-30 w-full h-auto px-8 py-5 rounded-3xl flex font-sarala"
+        className="bg-neutral-900 bg-opacity-50 w-full h-auto px-8 py-5 rounded-3xl flex font-sarala"
       >
         <div className="w-[45%]">
           <div>
@@ -111,6 +118,7 @@ const AddArtComp = () => {
                 <input
                   type="file"
                   id="fileInput"
+                  name="paintingImage"
                   className="hidden"
                   onChange={handleInputImage}
                   onBlur={handleFileInputBlur}
@@ -129,6 +137,7 @@ const AddArtComp = () => {
                     <input
                       type="file"
                       id="fileInput"
+                      name="paintingImage"
                       className="hidden"
                       onChange={handleInputImage}
                     />
@@ -141,6 +150,7 @@ const AddArtComp = () => {
             <p className="mb-2 text-lg text-neutral-500 my-2">Title</p>
             <input
               type="text"
+              defaultValue={data.title}
               name="title"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
@@ -148,6 +158,7 @@ const AddArtComp = () => {
           <div>
             <p className="mb-2 text-lg text-neutral-500 my-2">Description</p>
             <textarea
+              defaultValue={data.description}
               name="description"
               className="resize-none w-full h-[150px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
@@ -156,6 +167,7 @@ const AddArtComp = () => {
             <p className="mb-2 text-lg text-neutral-500 my-2">Medium</p>
             <input
               type="text"
+              defaultValue={data.medium}
               name="medium"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
@@ -171,6 +183,7 @@ const AddArtComp = () => {
               <input
                 type="text"
                 name="width"
+                defaultValue={data.width}
                 placeholder="width"
                 className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
               />
@@ -178,6 +191,7 @@ const AddArtComp = () => {
               <input
                 type="text"
                 name="height"
+                defaultValue={data.height}
                 placeholder="height"
                 className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
               />
@@ -187,6 +201,7 @@ const AddArtComp = () => {
             <p className="mb-2 text-lg text-neutral-500 my-2">Frame</p>
             <input
               type="text"
+              defaultValue={data.frame}
               name="frame"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
@@ -195,6 +210,7 @@ const AddArtComp = () => {
             <p className="mb-2 text-lg text-neutral-500 my-2">Weight (kg)</p>
             <input
               type="text"
+              defaultValue={data.weight}
               name="weight"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
@@ -203,6 +219,7 @@ const AddArtComp = () => {
             <p className="mb-2 text-lg text-neutral-500 my-2">Address city</p>
             <input
               type="text"
+              defaultValue={data.cityFrom}
               name="cityFrom"
               list="city"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
@@ -219,6 +236,7 @@ const AddArtComp = () => {
             </p>
             <input
               type="text"
+              defaultValue={data.estimatedDelivery}
               name="estimatedDelivery"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
@@ -226,7 +244,7 @@ const AddArtComp = () => {
           <div className="mt-5">
             <input
               type="submit"
-              value="Upload now"
+              value="Edit"
               className="w-full bg-blue-500 px-5 py-2 rounded-xl text-neutral-100 font-sarala text-xl cursor-pointer
               hover:bg-blue-600 transition duration-100 ease-in-out"
             />
@@ -236,7 +254,7 @@ const AddArtComp = () => {
       {notify ? (
         <Notify
           confirm={closeNotify}
-          content="Success upload your art"
+          content="Success edit your art"
           textButton="Ok"
         />
       ) : null}
@@ -244,4 +262,4 @@ const AddArtComp = () => {
   );
 };
 
-export default AddArtComp;
+export default EditArtComp;
