@@ -103,6 +103,16 @@ const Navbar = () => {
                   <p className="text-neutral-100">Rp{user?.balance}</p>
                   <p className="text-neutral-500">@{user?.username}</p>
                 </div>
+                <div className="h-full font-sarala flex items-start justify-start">
+                  <div
+                    onClick={() => {
+                      setModal(true);
+                    }}
+                    className="h-full cursor-pointer flex items-center"
+                  >
+                    <Image src={Logout} alt="" width={20} />
+                  </div>
+                </div>
               </div>
             </div>
             <div className="font-sarala border-2 border-neutral-900 px-1 py-1 lg:px-1.5 lg:py-1.5 flex lg:rounded-3xl rounded-2xl">

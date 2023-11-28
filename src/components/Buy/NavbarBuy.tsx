@@ -224,6 +224,14 @@ const Navbar = () => {
                 <Image src={Arrow} alt="" width={16} />
               </div>
             </Link>
+            <div
+              onClick={() => {
+                setModal(true);
+              }}
+              className="cursor-pointer"
+            >
+              <Image src={Logout} alt="" width={20} />
+            </div>
           </div>
         )}
       </nav>

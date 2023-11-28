@@ -40,7 +40,7 @@ export default function ListCard() {
     let dataTemp = [] as any[];
     try {
       await axios
-        .get("https://auction-api-4.vercel.app/auction/" + userId)
+        .get("https://auction-api-4.vercel.app/auction/user/" + userId)
         .then((res) => {
           dataTemp = res.data;
         });
