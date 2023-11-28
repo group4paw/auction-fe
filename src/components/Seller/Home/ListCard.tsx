@@ -43,7 +43,6 @@ export default function ListCard() {
         .get("https://auction-api-4.vercel.app/auction/" + userId)
         .then((res) => {
           dataTemp = res.data;
-          console.log(dataTemp);
         });
 
       let dataActive = dataTemp.filter((item: any) => item.status == "live");

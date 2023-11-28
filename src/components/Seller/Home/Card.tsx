@@ -15,8 +15,14 @@ import Notify from "@/components/Notify";
 const Card = ({ data }: any) => {
   const [modal, setModal] = useState(false);
   const [notify, setNotify] = useState(false);
+  const [user, setUser] = useState({} as any);
 
-  useEffect(() => {}, [data]);
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+    } else {
+      setUser(JSON.parse(localStorage.getItem("user") || "{}"));
+    }
+  }, [data]);
 
   const cancel = () => {
     setModal(false);
@@ -24,13 +30,37 @@ const Card = ({ data }: any) => {
 
   const closeNotify = () => {
     setNotify(false);
+    window.location.reload();
+  };
+
+  const handleCancelEvent = async () => {
+    let dataBody = {
+      userid: user._id,
+    };
+    try {
+      await axios.delete(
+        `https://auction-api-4.vercel.app/auction/${data._id}`,
+        {
+          data: dataBody,
+        }
+      );
+      setModal(false);
+      setNotify(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <>
       <div className="relative flex flex-col rounded-lg w-80 h-96 bg-neutral-900 bg-opacity-50">
         <Image
-          src={data.idPainting?.image || ""}
+          src={
+            data.idPainting?.image.includes("https://")
+              ? data.idPainting?.image
+              : "https://auction-api-4.vercel.app/images/" +
+                data.idPainting?.image
+          }
           alt=""
           width={340}
           height={384}
@@ -72,7 +102,12 @@ const Card = ({ data }: any) => {
           {data.status === "live" ? (
             <></>
           ) : data.status === "coming-soon" ? (
-            <button className="bg-shade-500 active:bg-blue-600 focus:ring focus:ring-blue-300 font-bold rounded-xl h-8 w-full mb-3 hover:bg-alert-red transition duration-100 ease-in-out">
+            <button
+              onClick={() => {
+                setModal(true);
+              }}
+              className="bg-shade-500 active:bg-blue-600 focus:ring focus:ring-blue-300 font-bold rounded-xl h-8 w-full mb-3 hover:bg-alert-red transition duration-100 ease-in-out"
+            >
               <span className="text-neutral-500 font-sarala font-normal text-base">
                 Cancel event
               </span>
@@ -88,6 +123,26 @@ const Card = ({ data }: any) => {
             </button>
           )}
         </div>
+
+        {modal ? (
+          <Modal
+            cancel={cancel}
+            confirm={handleCancelEvent}
+            content="Are you sure want to cancel this auction?"
+            isCancel={true}
+            confirmText="Yes"
+            cancelText="No"
+            title="Cancel auction"
+          />
+        ) : null}
+
+        {notify ? (
+          <Notify
+            confirm={closeNotify}
+            content="Auction has been canceled"
+            textButton="Ok"
+          />
+        ) : null}
       </div>
     </>
   );
