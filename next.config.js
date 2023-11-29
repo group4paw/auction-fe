@@ -17,6 +17,11 @@ const nextConfig = {
         hostname: "auction-api-4.vercel.app",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "etfkgazymc6eqtvf.public.blob.vercel-storage.com",
+        port: "",
+      },
     ],
   },
 };
