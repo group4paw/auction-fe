@@ -71,3 +71,17 @@ h6 {
 body::-webkit-scrollbar {
   display: none;
 }
+
+.inputDate > div > input {
+  background-color: transparent;
+  border: 2px solid #f0f0f0;
+  color: #f0f0f0;
+}
+
+.inputDate > div > input::placeholder {
+  color: #f0f0f0;
+}
+
+.inputDate > div > button {
+  color: #f0f0f0;
+}

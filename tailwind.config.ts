@@ -5,6 +5,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
     extend: {
@@ -58,7 +59,7 @@ const config: Config = {
         500: "#23252C",
       },
       white: "#FFFFFF",
-	  transparent: "rgba(0,0,0,0)"
+      transparent: "rgba(0,0,0,0)",
     },
   },
   plugins: [],

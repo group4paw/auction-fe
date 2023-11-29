@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +38,20 @@ const Navbar = () => {
     if (!localStorage.getItem("user")) {
       router.push("/login");
     } else setUser(JSON.parse(localStorage.getItem("user") || "{}"));
-  }, [router]);
+
+    if (pathname == "/sell") {
+      setActive("active-bid");
+      dispatch(setNavbar("active-bid"));
+    }
+    if (pathname == "/sell/collection") {
+      setActive("collection");
+      dispatch(setNavbar("collection"));
+    }
+    if (pathname == "/sell/order-status") {
+      setActive("order-status");
+      dispatch(setNavbar("order-status"));
+    }
+  }, []);
 
   useEffect(() => {
 	const fetchInfo = async () => {
@@ -59,7 +72,21 @@ const Navbar = () => {
     }
   }, [user]);
 
-  
+  useEffect(() => {}, [active]);
+
+  const fetchInfo = async () => {
+    try {
+      await axios
+        .get("https://auction-api-4.vercel.app/customer/info/" + user.id)
+        .then((res) => {
+          let result = res.data.data;
+          setCountWishlist(result.countWishlist);
+          setCountActivity(result.countBid);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const logout = () => {
     localStorage.removeItem("user");
@@ -89,31 +116,12 @@ const Navbar = () => {
                   <p className="text-neutral-100">Rp{user?.balance}</p>
                   <p className="text-neutral-500">@{user?.username}</p>
                 </div>
-                <div className="flex gap-2 items-center">
-                  <Link href="/buy/wishlist" className="relative">
-                    {countWislist > 0 && (
-                      <div className="absolute top-[-5px] right-[-5px] w-[12px] h-[12x] aspect-square text-center  text-[8px] text-white rounded-full bg-[#F31260]">
-                        {countWislist}
-                      </div>
-                    )}
-                    <Image src={Bookmark} alt="" width={14} />
-                  </Link>
-                  <Link href="/buy/cart">
-                    <Image src={Cart} alt="" width={24} />
-                  </Link>
-                  <Link href="/buy/activity" className="relative mr-1">
-                    {countActivity > 0 && (
-                      <div className="absolute top-[-2px] right-[-2px] w-[12px] h-[12x] aspect-square text-center  text-[8px] text-white rounded-full bg-[#F31260]">
-                        {countActivity}
-                      </div>
-                    )}
-                    <Image src={Redeye} alt="" width={24} />
-                  </Link>
+                <div className="h-full font-sarala flex items-start justify-start">
                   <div
                     onClick={() => {
                       setModal(true);
                     }}
-                    className="cursor-pointer"
+                    className="h-full cursor-pointer flex items-center"
                   >
                     <Image src={Logout} alt="" width={20} />
                   </div>
@@ -123,36 +131,50 @@ const Navbar = () => {
             <div className="font-sarala border-2 border-neutral-900 px-1 py-1 lg:px-1.5 lg:py-1.5 flex lg:rounded-3xl rounded-2xl">
               <button
                 onClick={(e) => {
-                  setActive("live-auction");
-                  dispatch(setNavbar("live-auction"));
-                  if (pathname !== "/buy") router.push("/buy");
+                  setActive("active-bid");
+                  dispatch(setNavbar("active-bid"));
+                  if (pathname !== "/sell") router.push("/sell");
                 }}
                 className={`${
-                  active == "live-auction"
+                  active == "active-bid"
                     ? "bg-pink-700 text-neutral-100"
                     : "bg-transparent text-neutral-700"
                 } py-1 px-2 lg:py-2 lg:px-5 lg:rounded-2xl rounded-xl text-[12px] lg:text-[16px]`}
               >
-                Live Auction
+                Your active bid
               </button>
               <button
                 onClick={(e) => {
-                  setActive("coming-soon");
-                  dispatch(setNavbar("coming-soon"));
-                  if (pathname !== "/buy") router.push("/buy");
+                  setActive("collection");
+                  dispatch(setNavbar("collection"));
+                  router.push("/sell/collection");
                 }}
                 className={`${
-                  active == "coming-soon"
+                  active == "collection"
+                    ? "bg-pink-700 text-neutral-100"
+                    : "bg-transparent text-neutral-700"
+                } py-1 px-2 lg:py-2 lg:px-5 lg:rounded-2xl rounded-xl text-[12px] lg:text-[16px]`}
+              >
+                Collection
+              </button>
+              <button
+                onClick={(e) => {
+                  setActive("order-status");
+                  dispatch(setNavbar("order-status"));
+                  if (pathname !== "/sell") router.push("/sell");
+                }}
+                className={`${
+                  active == "order-status"
                     ? "bg-pink-700 text-neutral-100"
                     : "bg-transparent text-neutral-700"
                 } py-1 px-2 lg:py-2 lg:px-5  lg:rounded-2xl rounded-xl text-[12px] lg:text-[16px]`}
               >
-                Coming Soon
+                Order Status
               </button>
             </div>
             <div className="w-auto lg:w-[20%]  h-full flex justify-end items-center gap-2">
               <Link
-                href="/buy"
+                href="/sell"
                 onClick={() => {
                   dispatch(setNavbar(""));
                 }}

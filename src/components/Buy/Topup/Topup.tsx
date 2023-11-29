@@ -1,5 +1,6 @@
 "use client";
 
+import Notify from "@/components/Notify";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -12,6 +13,7 @@ declare global {
 export default function TopupComponent() {
   const [amount, setAmount] = useState(0);
   const [token, setToken] = useState("");
+  const [notify, setNotify] = useState(false);
 
   const handleClick = async () => {
     try {
@@ -39,22 +41,13 @@ export default function TopupComponent() {
     }
   };
 
-  const update = async (order_id: any) => {
-    await axios
-      .put("https://auction-api-4.vercel.app/payment/topup", {
-        orderId: order_id,
-      })
-      .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data.customer));
-      });
-  };
-
   useEffect(() => {
     if (token) {
       window.snap.pay(token, {
         onSuccess: function (result: any) {
-          update(result.order_id);
+          localStorage.setItem("order_id", result.order_id);
           setToken("");
+          window.location.href = "/buy/topup/success";
         },
         onPending: function (result: any) {
           setToken("");

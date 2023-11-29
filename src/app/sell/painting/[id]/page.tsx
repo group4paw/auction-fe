@@ -7,12 +7,15 @@ import { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import NotFoundPage from "@/app/not-found";
 import axios from "axios";
+import PaintingCardDetail from "@/components/Seller/Collection/DetailPaintingCard";
+import { MdArrowBack } from "react-icons/md";
+import Link from "next/link";
 
 export default function AuctionDetail() {
   const [fetchStatus, setFetchStatus] = useState(false);
-  const [dataAuction, setDataAuction] = useState({} as any);
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
+  const [dataPainting, setDataPainting] = useState({} as any);
 
   useEffect(() => {
     if (fetchStatus) return;
@@ -23,10 +26,17 @@ export default function AuctionDetail() {
       try {
         await axios
           .get(
-            `https://auction-api-4.vercel.app/auction/${pathname.split("/")[3]}`
+            `https://auction-api-4.vercel.app/painting/${
+              pathname.split("/")[3]
+            }`
           )
           .then((res) => {
-            setDataAuction(res.data[0]);
+            let imageUrl = res.data.painting.image || "";
+            if (!imageUrl.includes("https://")) {
+              imageUrl = "https://auction-api-4.vercel.app/images/" + imageUrl;
+            }
+            res.data.painting.image = imageUrl;
+            setDataPainting(res.data.painting);
             setIsLoading(false);
           });
       } catch (err) {
@@ -41,15 +51,17 @@ export default function AuctionDetail() {
     <>
       {!isLoading ? (
         <>
-          {dataAuction ? (
+          {dataPainting.length != 0 ? (
             <div className="w-full px-5 lg:px-28 mt-9">
               <div className="flex lg:flex-row flex-col mb-14">
-                <div className="w-auto lg:w-[70%]">
-                  <AuctionCardDetail data={dataAuction} />
-                  <AuctionDetailComp data={dataAuction} />
-                </div>
-                <div className="w-auto w-[30%]">
-                  <AuctionActivityComp auctionId={dataAuction._id} />
+                <div className="w-auto lg:w-[70%] mx-auto flex items-start  gap-3">
+                  <Link
+                    href={`/sell/collection/`}
+                    className="bg-neutral-900 w-[32px] aspect-square flex justify-center items-center rounded-lg"
+                  >
+                    <MdArrowBack className="text-neutral-100 text-2xl" />
+                  </Link>
+                  <PaintingCardDetail data={dataPainting} />
                 </div>
               </div>
             </div>

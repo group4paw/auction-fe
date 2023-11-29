@@ -38,7 +38,7 @@ export default function ListCard() {
     let wishlist = [] as any[];
     try {
       await axios
-        .get("https://auction-api-4.vercel.app/auction/")
+        .get("https://auction-api-4.vercel.app/auction/user/")
         .then((res) => {
           if (navbar != "") {
             let data = res.data;
