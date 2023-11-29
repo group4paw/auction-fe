@@ -4,14 +4,30 @@ import Notify from "@/components/Notify";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import type { PutBlobResult } from "@vercel/blob";
+import { parse } from "path";
 
 const AddArtComp = () => {
   const [image, setImage] = useState(null);
-  const [fileImage, setFileImage] = useState(null);
+  const [fileImage, setFileImage] = useState<any>(null);
   const [notify, setNotify] = useState(false);
 
   const [listCity, setListCity] = useState([] as any);
   const [user, setUser] = useState({} as any);
+
+  let data = {
+    title: "",
+    description: "",
+    medium: "",
+    width: 0,
+    height: 0,
+    frame: "",
+    weight: 0,
+    cityFrom: "",
+    estimatedDelivery: "",
+    image: "",
+    sellerId: "",
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("user")) {
@@ -64,24 +80,31 @@ const AddArtComp = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const form = document.getElementById("form") as any;
-    const formData = new FormData(form);
-    formData.append("paintingsImage", fileImage as any);
-    formData.append("sellerId", user._id);
 
-    // loop data
-    await axios
-      .post("https://auction-api-4.vercel.app/painting/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setNotify(true);
-      })
-      .catch((err) => {
-        console.log(err);
+    let urlImage = "";
+
+    if (fileImage) {
+      const response = await fetch(`/api/images?filename=${fileImage.name}`, {
+        method: "POST",
+        body: fileImage,
       });
+      const newBlob = (await response.json()) as PutBlobResult;
+      urlImage = newBlob.url;
+    }
+
+    data.image = urlImage;
+    data.sellerId = user._id;
+
+    try {
+      await axios
+        .post("https://auction-api-4.vercel.app/painting/create", data)
+        .then((res) => {
+          console.log(res);
+          setNotify(true);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const closeNotify = () => {
@@ -142,6 +165,7 @@ const AddArtComp = () => {
             <input
               type="text"
               name="title"
+              onChange={(e) => (data.title = e.target.value)}
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
@@ -149,6 +173,7 @@ const AddArtComp = () => {
             <p className="mb-2 text-lg text-neutral-500 my-2">Description</p>
             <textarea
               name="description"
+              onChange={(e) => (data.description = e.target.value)}
               className="resize-none w-full h-[150px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
@@ -157,6 +182,7 @@ const AddArtComp = () => {
             <input
               type="text"
               name="medium"
+              onChange={(e) => (data.medium = e.target.value)}
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
@@ -172,6 +198,7 @@ const AddArtComp = () => {
                 type="text"
                 name="width"
                 placeholder="width"
+                onChange={(e) => (data.width = parseInt(e.target.value))}
                 className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
               />
               <p className="text-xl text-neutral-500 mx-4">x</p>
@@ -179,6 +206,7 @@ const AddArtComp = () => {
                 type="text"
                 name="height"
                 placeholder="height"
+                onChange={(e) => (data.height = parseInt(e.target.value))}
                 className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
               />
             </div>
@@ -188,6 +216,7 @@ const AddArtComp = () => {
             <input
               type="text"
               name="frame"
+              onChange={(e) => (data.frame = e.target.value)}
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
@@ -196,6 +225,7 @@ const AddArtComp = () => {
             <input
               type="text"
               name="weight"
+              onChange={(e) => (data.weight = parseInt(e.target.value))}
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
@@ -205,6 +235,7 @@ const AddArtComp = () => {
               type="text"
               name="cityFrom"
               list="city"
+              onChange={(e) => (data.cityFrom = e.target.value)}
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
             <datalist id="city">
@@ -220,6 +251,7 @@ const AddArtComp = () => {
             <input
               type="text"
               name="estimatedDelivery"
+              onChange={(e) => (data.estimatedDelivery = e.target.value)}
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
