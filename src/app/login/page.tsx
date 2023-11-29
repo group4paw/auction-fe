@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import LoginCard from "@/components/Login/LoginCard"
 
 const LoginPage = () => {
-	const [mode, setMode] = useState("login");
 	const router = useRouter();
 
 	useEffect(() => {
