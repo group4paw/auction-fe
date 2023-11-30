@@ -13,7 +13,7 @@ export default function AuctionActivityComp({ auctionId }: any) {
     if (!status) {
       fetchActivity();
     }
-  }, [auctionId]);
+  });
 
   const fetchActivity = async () => {
     setIsLoading(true);

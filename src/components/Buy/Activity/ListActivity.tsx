@@ -24,7 +24,7 @@ export default function ActivityCard() {
         setFetchStatus(true);
       }
     }
-  }, []);
+  }, [fetchStatus]);
 
   const fetchData = async (userId: any) => {
     setIsLoading(true);

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Bookmark from "@/assets/icons/bookmark.svg";
 import Timer from "../../Timer";
@@ -12,36 +13,37 @@ export default function AuctionCardDetail({ auctionId }: any) {
   const [modal, setModal] = useState(false);
   const [status, setStatus] = useState(false);
   useEffect(() => {
+	const fetchData = async (userId: any) => {
+		let response = {} as any;
+		await axios
+		  .get("https://auction-api-4.vercel.app/auction/" + auctionId)
+		  .then((res) => {
+			let result = res.data;
+			response = result[0];
+		  });
+	
+		await axios
+		  .get("https://auction-api-4.vercel.app/wishlist/" + userId)
+		  .then((res) => {
+			let wishlist = res.data;
+			let isWishlist = false;
+			wishlist.forEach((wish: any) => {
+			  if (response._id == wish.idAuction) {
+				isWishlist = true;
+			  }
+			});
+			response.isWishlist = isWishlist;
+		  });
+	
+		setData(response);
+	  };
     if (localStorage.getItem("user")) {
       let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;
       fetchData(userId);
     }
-  }, [data]);
+  }, [data, auctionId]);
 
-  const fetchData = async (userId: any) => {
-    let response = {} as any;
-    await axios
-      .get("https://auction-api-4.vercel.app/auction/" + auctionId)
-      .then((res) => {
-        let result = res.data;
-        response = result[0];
-      });
-
-    await axios
-      .get("https://auction-api-4.vercel.app/wishlist/" + userId)
-      .then((res) => {
-        let wishlist = res.data;
-        let isWishlist = false;
-        wishlist.forEach((wish: any) => {
-          if (response._id == wish.idAuction) {
-            isWishlist = true;
-          }
-        });
-        response.isWishlist = isWishlist;
-      });
-
-    setData(response);
-  };
+  
 
   const handleWishlist = async () => {
     let userId = JSON.parse(localStorage.getItem("user") || "{}")._id;

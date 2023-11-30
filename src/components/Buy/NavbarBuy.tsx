@@ -38,13 +38,13 @@ const Navbar = () => {
     if (!localStorage.getItem("user")) {
       router.push("/login");
     } else setUser(JSON.parse(localStorage.getItem("user") || "{}"));
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     if (user._id) {
       fetchInfo();
     }
-  }, [user]);
+  });
 
   const fetchInfo = async () => {
     try {

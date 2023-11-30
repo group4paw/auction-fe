@@ -54,6 +54,19 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+	const fetchInfo = async () => {
+		try {
+		  await axios
+			.get("https://auction-api-4.vercel.app/customer/info/" + user.id)
+			.then((res) => {
+			  let result = res.data.data;
+			  setCountWishlist(result.countWishlist);
+			  setCountActivity(result.countBid);
+			});
+		} catch (error) {
+		  console.log(error);
+		}
+	  };
     if (user._id) {
       fetchInfo();
     }
