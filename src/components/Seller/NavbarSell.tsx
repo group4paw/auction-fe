@@ -47,26 +47,26 @@ const Navbar = () => {
       setActive("collection");
       dispatch(setNavbar("collection"));
     }
-    if (pathname == "/sell/order-status") {
-      setActive("order-status");
-      dispatch(setNavbar("order-status"));
+    if (pathname == "/sell/order") {
+      setActive("order");
+      dispatch(setNavbar("order"));
     }
   }, []);
 
   useEffect(() => {
-	const fetchInfo = async () => {
-		try {
-		  await axios
-			.get("https://auction-api-4.vercel.app/customer/info/" + user.id)
-			.then((res) => {
-			  let result = res.data.data;
-			  setCountWishlist(result.countWishlist);
-			  setCountActivity(result.countBid);
-			});
-		} catch (error) {
-		  console.log(error);
-		}
-	  };
+    const fetchInfo = async () => {
+      try {
+        await axios
+          .get("https://auction-api-4.vercel.app/customer/info/" + user.id)
+          .then((res) => {
+            let result = res.data.data;
+            setCountWishlist(result.countWishlist);
+            setCountActivity(result.countBid);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
     if (user._id) {
       fetchInfo();
     }
@@ -105,7 +105,11 @@ const Navbar = () => {
           <div className="relative flex items-center justify-between h-16">
             <div className="hidden lg:flex items-center flex-row gap-3">
               <Image
-                src={user?.image ? user.image : ""}
+                src={
+                  user?.image
+                    ? user.image
+                    : "https://cdn.vectorstock.com/i/preview-1x/77/30/default-avatar-profile-icon-grey-photo-placeholder-vector-17317730.jpg"
+                }
                 width={60}
                 height={60}
                 alt=""
@@ -159,12 +163,12 @@ const Navbar = () => {
               </button>
               <button
                 onClick={(e) => {
-                  setActive("order-status");
-                  dispatch(setNavbar("order-status"));
-                  if (pathname !== "/sell") router.push("/sell");
+                  setActive("order");
+                  dispatch(setNavbar("order"));
+                  if (pathname !== "/sell/order") router.push("/sell/order");
                 }}
                 className={`${
-                  active == "order-status"
+                  active == "order"
                     ? "bg-pink-700 text-neutral-100"
                     : "bg-transparent text-neutral-700"
                 } py-1 px-2 lg:py-2 lg:px-5  lg:rounded-2xl rounded-xl text-[12px] lg:text-[16px]`}
@@ -178,7 +182,7 @@ const Navbar = () => {
                 onClick={() => {
                   dispatch(setNavbar(""));
                 }}
-                className="lg:w-7/12 h-auto"
+                className="lg:w-7/12 h-auto flex justify-center items-center"
               >
                 <Image
                   src={EasyBid}
@@ -202,48 +206,31 @@ const Navbar = () => {
             className="z-20 bg-blue-700 w-full absolute top-[80px] block lg:hidden px-8 pb-5 border-t-2 border-neutral-900 transition-all duration-500 ease-in-out
           "
           >
-            <div className="flex items-center gap-3 py-5">
-              <Image
-                src={user.image}
-                width={60}
-                height={60}
-                alt=""
-                className="rounded-full aspect-square object-cover"
-              />
-              <div className="font-sarala flex items-start gap-2">
-                <div>
-                  <p className="text-neutral-100">Rp{user.balance}</p>
-                  <p className="text-neutral-500">@{user.username}</p>
+            <div className="flex items-center justify-between gap-3 py-5">
+              <div className="flex items-center gap-3">
+                <Image
+                  src={user.image}
+                  width={60}
+                  height={60}
+                  alt=""
+                  className="rounded-full aspect-square object-cover"
+                />
+                <div className="font-sarala flex items-start gap-2">
+                  <div>
+                    <p className="text-neutral-100">Rp{user.balance}</p>
+                    <p className="text-neutral-500">@{user.username}</p>
+                  </div>
                 </div>
+              </div>
+              <div
+                onClick={() => {
+                  setModal(true);
+                }}
+                className="cursor-pointer"
+              >
+                <Image src={Logout} alt="" width={20} />
               </div>
             </div>
-            <Link href="/buy/wishlist">
-              <div className="text-neutral-500 text-[16px]  flex justify-between">
-                <div className="flex gap-4 items-center">
-                  <Image src={Bookmark} alt="" width={32} />
-                  <p>Wishlist</p>
-                </div>
-                <Image src={Arrow} alt="" width={16} />
-              </div>
-            </Link>
-            <Link href="/buy/cart">
-              <div className="text-neutral-500 text-[16px] my-3 flex justify-between">
-                <div className="flex gap-4 items-center">
-                  <Image src={Cart} alt="" width={32} />
-                  <p>Cart</p>
-                </div>
-                <Image src={Arrow} alt="" width={16} />
-              </div>
-            </Link>
-            <Link href="/buy/wishlist">
-              <div className="text-neutral-500 text-[16px] flex justify-between">
-                <div className="flex gap-4 items-center">
-                  <Image src={Redeye} alt="" width={32} />
-                  <p>Bid Activity</p>
-                </div>
-                <Image src={Arrow} alt="" width={16} />
-              </div>
-            </Link>
           </div>
         )}
       </nav>

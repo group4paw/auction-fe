@@ -81,8 +81,8 @@ export default function TopupComponent() {
 
   return (
     <>
-      <div className="w-full flex gap-3 justify-between items-start">
-        <div className="bg-neutral-900/30 py-5 p-8 rounded-3xl w-[70%] ">
+      <div className="w-full flex flex-col lg:flex-row gap-3 justify-between items-start">
+        <div className="bg-neutral-900/30 py-5 p-8 rounded-3xl w-full lg:w-[70%] ">
           <div className="flex flex-col gap-3">
             <label className="text-neutral-100">Top up amount (Rp)</label>
             <input
@@ -104,7 +104,7 @@ export default function TopupComponent() {
         </div>
         <button
           onClick={handleClick}
-          className={`w-[30%] 
+          className={`w-full lg:w-[30%] 
           ${
             amount <= 0
               ? "bg-neutral-900 text-neutral-700 cursor-not-allowed"

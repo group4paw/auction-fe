@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import ListActive from "./ListActive";
 import ListComing from "./ListComing";
+import ListOver from "./ListOver";
 
 export default function ListCard() {
   const [fetchStatus, setFetchStatus] = useState(false);
@@ -12,6 +13,7 @@ export default function ListCard() {
   const [user, setUser] = useState({} as any);
   const [listActiveAuction, setListActiveAuction] = useState([] as any[]);
   const [listComingAuction, setListComingAuction] = useState([] as any[]);
+  const [listOverAuction, setListOverAuction] = useState([] as any[]);
 
   const navbar = useSelector((state: any) => state.navbar.value);
 
@@ -49,6 +51,9 @@ export default function ListCard() {
       let dataComing = dataTemp.filter(
         (item: any) => item.status == "coming-soon"
       );
+      let dataOver = dataTemp.filter(
+        (item: any) => item.status == "over" || item.status == "Sold"
+      );
 
       // sort data active by time left
       dataActive.sort((a: any, b: any) => {
@@ -63,6 +68,7 @@ export default function ListCard() {
 
       setListActiveAuction(dataActive);
       setListComingAuction(dataComing);
+      setListOverAuction(dataOver);
 
       setIsLoading(false);
     } catch (err) {
@@ -76,6 +82,7 @@ export default function ListCard() {
         <div className="w-full flex flex-col gap-10">
           <ListActive data={listActiveAuction} />
           <ListComing data={listComingAuction} />
+          <ListOver data={listOverAuction} />
         </div>
       ) : (
         <div className="w-screen flex justify-center items-center h-1/2">

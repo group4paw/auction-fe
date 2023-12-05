@@ -56,16 +56,19 @@ export default function ActivityCard() {
       {!isLoading ? (
         listAuction.map((data, index) => {
           return (
-            <div key={index} className="w-full flex justify-between">
+            <div
+              key={index}
+              className="w-full flex lg:flex-row flex-col lg:gap-0 gap-3 justify-between items-center"
+            >
               <Card auctionId={data} />
-              <div className="mr-8">
+              <div className="lg:mr-8 mr-0 lg:w-auto w-full">
                 <AuctionActivityComp auctionId={data} />
               </div>
             </div>
           );
         })
       ) : (
-        <div className="w-screen flex justify-center items-center h-1/2">
+        <div className="w-full flex justify-center items-center h-1/2">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-neutral-900"></div>
         </div>
       )}

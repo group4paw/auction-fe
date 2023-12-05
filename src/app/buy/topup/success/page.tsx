@@ -26,7 +26,7 @@ const SuccessTopUp = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-1/4 mx-auto mt-[20vh]">
+    <div className="flex flex-col items-center justify-center w-[90%] lg:w-1/4 mx-auto mt-[20vh]">
       <div className="w-full flex items-center px-5 h-[20%] bg-neutral-900 overflow-hidden rounded-t-2xl text-neutral-300 justify-between">
         <p>Success</p>
       </div>

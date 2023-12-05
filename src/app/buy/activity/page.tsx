@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function Activity() {
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-center lg:justify-between lg:px-24 py-12">
-        <div className="z-10 lg:max-w-3xl w-full items-center justify-center lg:justify-start gap-4 font-sarala text-sm flex flex-col flex-wrap">
+      <main className="flex min-h-screen flex-col items-center justify-start lg:justify-between lg:px-24 py-12">
+        <div className="z-10 lg:max-w-3xl w-[90%] items-center justify-center lg:justify-start gap-4 font-sarala text-sm flex flex-col flex-wrap">
           <div className="flex justify-start w-full">
             <h6 className="text-[24px] text-white font-bold">
               Watch your bid activity
