@@ -15,7 +15,11 @@ import Notify from "@/components/Notify";
 const Card = ({ data }: any) => {
   const [modal, setModal] = useState(false);
   const [notify, setNotify] = useState(false);
+  const [notify2, setNotify2] = useState(false);
   const [user, setUser] = useState({} as any);
+  const [modal2, setModal2] = useState(false);
+  const [winner, setWinner] = useState({} as any);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!localStorage.getItem("user")) {
@@ -26,11 +30,16 @@ const Card = ({ data }: any) => {
 
   const cancel = () => {
     setModal(false);
+    setModal2(false);
   };
 
   const closeNotify = () => {
     setNotify(false);
     window.location.reload();
+  };
+
+  const closeNotify2 = () => {
+    setNotify2(false);
   };
 
   const handleCancelEvent = async () => {
@@ -49,6 +58,60 @@ const Card = ({ data }: any) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleWinner = async () => {
+    try {
+      await axios
+        .get(`https://auction-api-4.vercel.app/bid/${data._id}`)
+        .then((res) => {
+          const response = res.data;
+          response.sort((a: any, b: any) => {
+            return b.amount - a.amount;
+          });
+          setWinner(response[0]);
+        });
+      setModal2(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleOrder = async () => {
+    // create expired date 3 days from now
+    const date = new Date();
+    const newDate = date.setDate(date.getDate() + 3);
+    let offset = new Date().getTimezoneOffset();
+    let offsetHours = Math.abs(offset / 60);
+
+    let dateOffset = new Date(newDate).setHours(
+      new Date(newDate).getHours() + offsetHours
+    );
+
+    const expiredDate = new Date(dateOffset).toISOString();
+
+    const body = {
+      idSeller: user._id,
+      idCustomer: winner.bidder._id,
+      idAuction: data._id,
+      idPainting: data.idPainting._id,
+      highestBid: data.highestBid,
+      title: data.idPainting.title,
+      image: data.idPainting.image,
+      expiredDate: expiredDate,
+    };
+
+    await axios
+      .post("https://auction-api-4.vercel.app/order", body)
+      .then((res) => {
+        setError("Success set winner");
+        setNotify2(true);
+      })
+      .catch((err) => {
+        setNotify2(true);
+        console.log(err);
+        setError(err.response.data.error);
+      });
   };
 
   return (
@@ -112,13 +175,22 @@ const Card = ({ data }: any) => {
                 Cancel event
               </span>
             </button>
+          ) : data.status === "over" ? (
+            <button
+              onClick={handleWinner}
+              className="bg-alert-red active:bg-blue-600 focus:ring focus:ring-blue-300 text-white font-bold rounded-xl h-8 w-full mb-3"
+            >
+              <span className="text-white font-sarala font-normal text-base">
+                Set winner
+              </span>
+            </button>
           ) : (
             <button
               disabled
               className="bg-alert-red active:bg-blue-600 focus:ring focus:ring-blue-300 text-white font-bold rounded-xl h-8 w-full mb-3"
             >
               <span className="text-white font-sarala font-normal text-base">
-                Auction is over
+                Sold
               </span>
             </button>
           )}
@@ -136,12 +208,34 @@ const Card = ({ data }: any) => {
           />
         ) : null}
 
+        {modal2 ? (
+          <Modal
+            cancel={cancel}
+            confirm={winner ? handleOrder : cancel}
+            content={
+              winner
+                ? `The winner is @${winner.bidder.username} with bid Rp${data.highestBid} Are you sure to set the winner and end this auction?
+            
+            `
+                : "There is no bidder yet."
+            }
+            isCancel={winner ? true : false}
+            confirmText={winner ? "Yes" : "Ok"}
+            cancelText="No"
+            title="Set winner"
+          />
+        ) : null}
+
         {notify ? (
           <Notify
             confirm={closeNotify}
             content="Auction has been canceled"
             textButton="Ok"
           />
+        ) : null}
+
+        {notify2 ? (
+          <Notify confirm={closeNotify2} content={error} textButton="Ok" />
         ) : null}
       </div>
     </>

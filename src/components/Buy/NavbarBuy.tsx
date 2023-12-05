@@ -32,6 +32,7 @@ const Navbar = () => {
   const [user, setUser] = useState({} as any);
   const [countWislist, setCountWishlist] = useState(0);
   const [countActivity, setCountActivity] = useState(0);
+  const [countOrder, setCountOrder] = useState(0);
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ const Navbar = () => {
           let result = res.data.data;
           setCountWishlist(result.countWishlist);
           setCountActivity(result.countBid);
+          setCountOrder(result.countOrder);
         });
     } catch (error) {
       console.log(error);
@@ -77,7 +79,11 @@ const Navbar = () => {
           <div className="relative flex items-center justify-between h-16">
             <div className="hidden lg:flex items-center flex-row gap-3">
               <Image
-                src={user?.image ? user.image : ""}
+                src={
+                  user?.image
+                    ? user.image
+                    : "https://cdn.vectorstock.com/i/preview-1x/77/30/default-avatar-profile-icon-grey-photo-placeholder-vector-17317730.jpg"
+                }
                 width={60}
                 height={60}
                 alt=""
@@ -99,7 +105,12 @@ const Navbar = () => {
                     )}
                     <Image src={Bookmark} alt="" width={14} />
                   </Link>
-                  <Link href="/buy/cart">
+                  <Link href="/buy/order">
+                    {countOrder > 0 && (
+                      <div className="absolute top-[-2px] right-[-2px] w-[12px] h-[12x] aspect-square text-center  text-[8px] text-white rounded-full bg-[#F31260]">
+                        {countOrder}
+                      </div>
+                    )}
                     <Image src={Cart} alt="" width={24} />
                   </Link>
                   <Link href="/buy/activity" className="relative mr-1">
@@ -200,7 +211,7 @@ const Navbar = () => {
             <Link href="/buy/wishlist">
               <div className="text-neutral-500 text-[16px]  flex justify-between">
                 <div className="flex gap-4 items-center">
-                  <Image src={Bookmark} alt="" width={32} />
+                  <Image src={Bookmark} alt="" width={16} />
                   <p>Wishlist</p>
                 </div>
                 <Image src={Arrow} alt="" width={16} />
@@ -209,16 +220,16 @@ const Navbar = () => {
             <Link href="/buy/cart">
               <div className="text-neutral-500 text-[16px] my-3 flex justify-between">
                 <div className="flex gap-4 items-center">
-                  <Image src={Cart} alt="" width={32} />
+                  <Image src={Cart} alt="" width={26} />
                   <p>Cart</p>
                 </div>
                 <Image src={Arrow} alt="" width={16} />
               </div>
             </Link>
-            <Link href="/buy/wishlist">
+            <Link href="/buy/activity">
               <div className="text-neutral-500 text-[16px] flex justify-between">
                 <div className="flex gap-4 items-center">
-                  <Image src={Redeye} alt="" width={32} />
+                  <Image src={Redeye} alt="" width={26} />
                   <p>Bid Activity</p>
                 </div>
                 <Image src={Arrow} alt="" width={16} />
@@ -228,9 +239,13 @@ const Navbar = () => {
               onClick={() => {
                 setModal(true);
               }}
-              className="cursor-pointer"
+              className="text-neutral-500 text-[16px] flex  my-3 justify-between"
             >
-              <Image src={Logout} alt="" width={20} />
+              <div className="flex gap-4 items-center justify-center">
+                <Image src={Logout} alt="" width={24} />
+                <p>Logout</p>
+              </div>
+              <Image src={Arrow} alt="" width={16} />
             </div>
           </div>
         )}

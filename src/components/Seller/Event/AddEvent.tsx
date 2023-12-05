@@ -147,9 +147,9 @@ const AddEventComp = () => {
           <form
             id="form"
             onSubmit={handleSubmit}
-            className="bg-neutral-900 bg-opacity-30 w-full h-auto px-8 py-5 rounded-3xl flex font-sarala"
+            className="bg-neutral-900 bg-opacity-30 w-full h-auto px-8 py-5 rounded-3xl flex flex-col lg:flex-row font-sarala"
           >
-            <div className="w-[45%]">
+            <div className="w-full lg:w-[45%]">
               <div className="relative">
                 <p className="mb-2 text-lg text-neutral-500 my-2">
                   Choose your art
@@ -217,7 +217,7 @@ const AddEventComp = () => {
               </div>
             </div>
             <div className="w-[5%]"></div>
-            <div className="w-[45%]">
+            <div className="w-full lg:w-[45%]">
               <div className="inputDate">
                 <p className="mb-2 text-lg text-neutral-500 my-2">
                   Start Date - End Date

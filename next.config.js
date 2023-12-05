@@ -22,6 +22,11 @@ const nextConfig = {
         hostname: "etfkgazymc6eqtvf.public.blob.vercel-storage.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.vectorstock.com",
+        port: "",
+      },
     ],
   },
 };

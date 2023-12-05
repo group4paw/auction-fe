@@ -9,6 +9,7 @@ export default function ListCard() {
   const [fetchStatus, setFetchStatus] = useState(false);
   const [listAuction, setListAuction] = useState([] as any[]);
   const [isLoading, setIsLoading] = useState(false);
+  const [countOver, setCountOver] = useState(0);
   const [user, setUser] = useState({} as any);
 
   const navbar = useSelector((state: any) => state.navbar.value);
@@ -85,6 +86,11 @@ export default function ListCard() {
         } else return 0;
       });
 
+      const over = dataTemp.filter(
+        (item: any) => item.status == "over" || item.status == "Sold"
+      );
+      setCountOver(over.length);
+
       setListAuction(dataTemp);
       setIsLoading(false);
     } catch (err) {
@@ -95,13 +101,21 @@ export default function ListCard() {
   return (
     <>
       {!isLoading ? (
-        listAuction.map((data, index) => {
-          return (
-            <div key={index}>
-              <Card data={data} />;
-            </div>
-          );
-        })
+        listAuction.length > countOver ? (
+          listAuction.map((data, index) => {
+            return (
+              data.status != "over" && (
+                <div key={index}>
+                  <Card data={data} />
+                </div>
+              )
+            );
+          })
+        ) : (
+          <div className="w-screen flex justify-center items-center h-1/2">
+            <p className="text-2xl text-neutral-900">No Auction</p>
+          </div>
+        )
       ) : (
         <div className="w-screen flex justify-center items-center h-1/2">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-neutral-900"></div>
