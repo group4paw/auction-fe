@@ -146,7 +146,7 @@ export default function AuctionCardDetail({ data }: any) {
             </div>
             <div>
               <div className="text-[14x] text-neutral-500 text-right">
-                Auction Ends In
+                {data.status == "live" ? "Auction ends in" : "Auction is over"}
               </div>
               <div className="flex flex-row justify-end">
                 <Image src={Clock} alt="" width={14} className="mr-1" />
@@ -157,12 +157,13 @@ export default function AuctionCardDetail({ data }: any) {
             </div>
           </div>
           <button
+            disabled={data.status == "over" ? true : false}
             onClick={() => {
               setModalBid(true);
             }}
             className="w-full bg-blue-500 py-2 text-neutral-100 rounded-xl mt-2"
           >
-            Place a bid
+            {data.status == "live" ? "Place a bid" : "Auction is over"}
           </button>
         </div>
       </div>

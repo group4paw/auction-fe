@@ -58,7 +58,7 @@ export default function ActivityCard() {
           return (
             <div
               key={index}
-              className="w-full flex lg:flex-row flex-col lg:gap-0 gap-3 justify-between items-center"
+              className="w-full flex lg:flex-row flex-col lg:gap-0 gap-3 justify-between items-start"
             >
               <Card auctionId={data} />
               <div className="lg:mr-8 mr-0 lg:w-auto w-full">
