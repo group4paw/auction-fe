@@ -2,6 +2,8 @@
     Easybid
 </h1>
 
+![image](https://github.com/group4paw/auction-fe/assets/88085604/da9331ca-5ca9-46f8-9c49-0cbed7fefa29)
+
 ## Deskripsi
 Easybid is an online auction application that provides an easy and enjoyable experience for participating in painting auctions. <br>
 
