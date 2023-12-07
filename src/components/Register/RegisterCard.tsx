@@ -35,7 +35,7 @@ const RegisterCard = () => {
     event.preventDefault();
 
     await axios
-      .post(`http://localhost:3000/${chooseRole}/signup`, {
+      .post(`https://auction-api-4.vercel.app/${chooseRole}/signup`, {
         name: fullName,
         username: userName,
         email: email,
@@ -44,7 +44,6 @@ const RegisterCard = () => {
         address: address,
       })
       .then((res) => {
-        console.log(res.data);
         setIsError(false);
         setMessage("Successfully create your account");
         if (res.status == 201) setModal(true);
