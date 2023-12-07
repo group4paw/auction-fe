@@ -22,7 +22,7 @@ Easybid is an online auction application that provides an easy and enjoyable exp
 - **Backend Deployed:** https://auction-api-4.vercel.app/
 - **Backend Repository:** https://github.com/group4paw/auction-api
 - **Slide:** https://s.id/Easybid_PPT
-- **Video Presentasi:** 
+- **Video Presentasi:** https://drive.google.com/file/d/1CZYvqt-3XGJ7gZakpKMdMMOk5EvcJYHX/view?usp=sharing
 - **Figma File:** https://s.id/Easybid_Figma
 
 ## Tech Stack
@@ -37,6 +37,33 @@ Easybid is an online auction application that provides an easy and enjoyable exp
 - **Figma:** UI/UX Design
 - **Postman:** API Client
 - **Midtrans:** Payment Gateway
+
+
+
+## Project structure
+    Project
+    ├── public
+    └── src
+        ├── app
+        │   ├── api
+        │   ├── buy
+        │   ├── login
+        │   ├── register
+        │   └── sell
+        ├── assets
+        │   ├── icons
+        │   ├── image
+        │   └── logo
+        ├── components
+        │   ├── beranda
+        │   ├── buy
+        │   ├── login
+        │   ├── register
+        │   └── seller
+        ├── redux
+        │   └── features
+        └── type
+            └── index.ts
 
 ## How to Run?
 1. Clone this repository
