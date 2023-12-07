@@ -14,8 +14,10 @@ export default function TopupComponent() {
   const [amount, setAmount] = useState(0);
   const [token, setToken] = useState("");
   const [notify, setNotify] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
+    setIsLoading(true);
     try {
       const config = {
         headers: {
@@ -43,6 +45,7 @@ export default function TopupComponent() {
 
   useEffect(() => {
     if (token) {
+      setIsLoading(true);
       window.snap.pay(token, {
         onSuccess: function (result: any) {
           localStorage.setItem("order_id", result.order_id);
@@ -51,12 +54,15 @@ export default function TopupComponent() {
         },
         onPending: function (result: any) {
           setToken("");
+          setIsLoading(false);
         },
         onError: function (result: any) {
           console.log("error", result);
+          setIsLoading(false);
           setToken("");
         },
         onClose: function () {
+          setIsLoading(false);
           console.log(
             "Customer closed the popup without finishing the payment"
           );
@@ -81,40 +87,48 @@ export default function TopupComponent() {
 
   return (
     <>
-      <div className="w-full flex flex-col lg:flex-row gap-3 justify-between items-start">
-        <div className="bg-neutral-900/30 py-5 p-8 rounded-3xl w-full lg:w-[70%] ">
-          <div className="flex flex-col gap-3">
-            <label className="text-neutral-100">Top up amount (Rp)</label>
-            <input
-              className=" bg-transparent rounded-xl px-5 py-3 text-neutral-100 border-2 border-neutral-100 rounded-xl focus:outline-none"
-              type="number"
-              value={amount || ""}
-              placeholder="120000000"
-              onChange={(e: any) => {
-                setAmount(e.target.value);
-              }}
-            />
+      {!isLoading ? (
+        <div className="w-full flex flex-col lg:flex-row gap-3 justify-between items-start">
+          <div className="bg-neutral-900/30 py-5 p-8 rounded-3xl w-full lg:w-[70%] ">
+            <div className="flex flex-col gap-3">
+              <label className="text-neutral-100">Top up amount (Rp)</label>
+              <input
+                className=" bg-transparent rounded-xl px-5 py-3 text-neutral-100 border-2 border-neutral-100 rounded-xl focus:outline-none"
+                type="number"
+                value={amount || ""}
+                placeholder="120000000"
+                onChange={(e: any) => {
+                  setAmount(e.target.value);
+                }}
+              />
+            </div>
+            <div className="font-sarala text-neutral-500 my-5 text-[12px]">
+              <p>
+                Payment will be processed via Midtrans.
+                <br /> By clicking Pay Now, you agree to our Terms and
+                Conditions
+              </p>
+            </div>
           </div>
-          <div className="font-sarala text-neutral-500 my-5 text-[12px]">
-            <p>
-              Payment will be processed via Midtrans.
-              <br /> By clicking Pay Now, you agree to our Terms and Conditions
-            </p>
-          </div>
-        </div>
-        <button
-          onClick={handleClick}
-          className={`w-full lg:w-[30%] 
+          <button
+            onClick={handleClick}
+            className={`w-full lg:w-[30%] 
           ${
             amount <= 0
               ? "bg-neutral-900 text-neutral-700 cursor-not-allowed"
               : "bg-blue-500 text-neutral-100 cursor-pointer"
           }
           px-5 py-3 rounded-xl text-[20px] font-sarala font-bold`}
-        >
-          Pay Now
-        </button>
-      </div>
+          >
+            Pay Now
+          </button>
+        </div>
+      ) : (
+        // make loading
+        <div className="w-full flex justify-center items-center h-1/2">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-neutral-900"></div>
+        </div>
+      )}
     </>
   );
 }

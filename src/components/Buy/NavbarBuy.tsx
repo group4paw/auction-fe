@@ -105,7 +105,7 @@ const Navbar = () => {
                     )}
                     <Image src={Bookmark} alt="" width={14} />
                   </Link>
-                  <Link href="/buy/order">
+                  <Link href="/buy/order" className="relative">
                     {countOrder > 0 && (
                       <div className="absolute top-[-2px] right-[-2px] w-[12px] h-[12x] aspect-square text-center  text-[8px] text-white rounded-full bg-[#F31260]">
                         {countOrder}

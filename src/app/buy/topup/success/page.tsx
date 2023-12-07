@@ -3,7 +3,6 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { MdClose } from "react-icons/md";
 
 const SuccessTopUp = () => {
   const [success, setSuccess] = useState(false);
@@ -21,7 +20,6 @@ const SuccessTopUp = () => {
           orderId: order_id,
         })
         .then((res) => {
-          console.log(res.data);
           localStorage.removeItem("user");
           localStorage.setItem("user", JSON.stringify(res.data.customer));
           setSuccess(true);
@@ -40,7 +38,7 @@ const SuccessTopUp = () => {
           </div>
           <div className="w-full h-[80%] px-5 py-5 flex flex-col justify-between bg-white rounded-b-xl">
             <p className=" text-neutral-900 text-[16px] font-bold">
-              Your top up has been successfully processed
+              Your top up has been successfully processed, refresh page to see
             </p>
             <div className="flex justify-end gap-2">
               <Link
