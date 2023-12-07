@@ -1,7 +1,6 @@
-import ListCollection from "@/components/Seller/Collection/ListCollection";
-
-import type { Metadata } from "next";
 import Link from "next/link";
+import type { Metadata } from "next";
+import ListCollection from "@/components/Seller/Collection/ListCollection";
 
 export const metadata: Metadata = {
   title: "Collection | Easybid",

@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <div className="w-full px-5 py-3 sm:px-6 lg:px-20 lg:py-5">
+        <div className="w-full px-5 py-3 sm:px-6 lg:px-20 lg:py-5 2xl:px-32">
           <div className="relative flex items-center justify-between h-16">
             <div className="flex items-center flex-row gap-3">
               <Link href="/">
@@ -58,7 +58,7 @@ const Navbar = () => {
             </div>
             <div className="flex items-center gap-2">
               <Link href="/login">
-                <button className="text-[18px] px-5 py-2 bg-shade-500 rounded-2xl text-neutral-500">
+                <button className="text-[18px] px-5 py-2 bg-shade-500 rounded-2xl text-neutral-500 hover:bg-blue-500 hover:text-white transition-all">
                   Sign In
                 </button>
               </Link>

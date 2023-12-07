@@ -1,6 +1,8 @@
 import Navbar from "@/components/Beranda/Navbar";
 import Hero from "@/components/Beranda/Hero";
 import type { Metadata } from "next";
+import Footer from "@/components/Beranda/Footer";
+import TrendingArts from "@/components/Beranda/TrendingArts";
 
 export const metadata: Metadata = {
   title: "Easybid",
@@ -13,6 +15,8 @@ export default function Home() {
       <div className="z-10 w-full items-center justify-center lg:justify-start gap-4 font-white">
         <Navbar />
         <Hero />
+        <TrendingArts />
+        <Footer />
       </div>
     </main>
   );

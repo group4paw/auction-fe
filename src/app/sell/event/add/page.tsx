@@ -1,6 +1,12 @@
 import AddEventComp from "@/components/Seller/Event/AddEvent";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Add Event | Easybid",
+  description: "...",
+};
 
 const AddEvent = () => {
   return (
