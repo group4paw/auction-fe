@@ -56,7 +56,13 @@ const EditArt = () => {
             </Link>
           </div>
           <div className="items-center justify-center lg:justify-center flex flex-wrap">
-            <EditArtComp data={dataPainting} />
+            {dataPainting._id ? (
+              <EditArtComp data={dataPainting} />
+            ) : (
+              <div className="flex justify-center items-center h-[50vh] w-full">
+                <p className="text-white">Loading...</p>
+              </div>
+            )}
           </div>
         </div>
       </main>
