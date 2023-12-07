@@ -21,9 +21,9 @@ Easybid is an online auction application that provides an easy and enjoyable exp
 - **Deployed Website:** https://auction-fe-gilt.vercel.app/
 - **Backend Deployed:** https://auction-api-4.vercel.app/
 - **Backend Repository:** https://github.com/group4paw/auction-api
-- **Slide:**
-- **Video Presentasi:**
-- **Figma File:**
+- **Slide:** https://s.id/Easybid_PPT
+- **Video Presentasi:** 
+- **Figma File:** https://s.id/Easybid_Figma
 
 ## Tech Stack
 - **NodeJs:** Server-side
