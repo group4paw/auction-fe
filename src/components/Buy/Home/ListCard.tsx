@@ -70,20 +70,23 @@ export default function ListCard() {
         item.isWishlist = isWishlist;
       });
 
-      // sort data by status
-      dataTemp.sort((a: any, b: any) => {
-        if (a.status == "live" && b.status == "coming-soon") return -1;
-        else if (a.status == "coming-soon" && b.status == "live") return 1;
-        else return 0;
-      });
+      const statusOrder = ["live", "coming-soon", "over"];
 
-      // sort again by timeleft
-      dataTemp.sort((a: any, b: any) => {
+      // sort data by status
+      dataTemp = dataTemp.sort(
+        (a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status)
+      );
+
+      dataTemp = dataTemp.sort((a, b) => {
         if (a.status == "live" && b.status == "live") {
-          if (a.timeLeft < b.timeLeft) return -1;
-          else if (a.timeLeft > b.timeLeft) return 1;
-          else return 0;
-        } else return 0;
+          return new Date(a.dateEnd).getTime() - new Date(b.dateEnd).getTime();
+        } else if (a.status == "coming-soon" && b.status == "coming-soon") {
+          return (
+            new Date(a.dateStart).getTime() - new Date(b.dateStart).getTime()
+          );
+        } else {
+          return 0;
+        }
       });
 
       const over = dataTemp.filter(
