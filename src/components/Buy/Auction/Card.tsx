@@ -140,7 +140,7 @@ export default function AuctionCardDetail({ data }: any) {
           <div className="flex justify-between">
             <div>
               <p className="text-[14px] text-neutral-500">Highest bid</p>
-              <p className="text-[20px] text-neutral-100">
+              <p className="text-[20px] text-neutral-100 font-bold font-sarala">
                 Rp{data.highestBid}
               </p>
             </div>

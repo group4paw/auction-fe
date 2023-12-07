@@ -19,6 +19,8 @@ const RegisterCard = () => {
   const [address, setAddress] = useState("");
   const [response, setResponse] = useState<number | undefined>();
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [message, setMessage] = useState<string | undefined>("");
+  const [isError, setIsError] = useState<boolean>(false);
   const [modal, setModal] = useState(false);
   const [chooseRole, setChooseRole] = useState("customer");
   const router = useRouter();
@@ -42,10 +44,14 @@ const RegisterCard = () => {
         address: address,
       })
       .then((res) => {
-        console.log(res.data);
+        setIsError(false);
+        setMessage("Successfully create your account");
         if (res.status == 201) setModal(true);
       })
       .catch((error) => {
+        setIsError(true);
+        setMessage(error.response.data.error);
+        setModal(true);
         setResponse(error.response.status);
       });
   };
@@ -63,6 +69,14 @@ const RegisterCard = () => {
   //   useEffect(() => {
   //     console.log(imageFile?.name);
   //   }, [imageFile]);
+
+  const success = () => {
+    router.push("/login", { scroll: false });
+  };
+
+  const failed = () => {
+    setModal(false);
+  };
 
   return (
     <div className="max-w-sm w-full bg-shade-500 p-8 rounded-2xl">
@@ -227,10 +241,10 @@ const RegisterCard = () => {
       {modal && (
         <Modal
           cancel={() => setModal(false)}
-          confirm={() => router.push("/login", { scroll: false })}
+          confirm={isError ? failed : success}
           title={"Notification"}
-          content={"Successfully create your account"}
-          confirmText={"Login now"}
+          content={message}
+          confirmText={isError ? "Close" : "Login now"}
         />
       )}
     </div>
