@@ -1,4 +1,4 @@
-![image](https://github.com/group4paw/auction-fe/assets/88085604/793b9aa8-df61-4c36-8e12-9b37aaf5887c)<h1 align="center">
+<h1 align="center">
     Easybid
 </h1>
 
