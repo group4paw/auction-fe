@@ -15,6 +15,20 @@ const EditArtComp = ({ data }: any) => {
   const [notify, setNotify] = useState(false);
   const [fetchStatus, setFetchStatus] = useState(false);
 
+  let newData = {
+    title: data.title,
+    description: data.description,
+    medium: data.medium,
+    width: data.width,
+    height: data.height,
+    frame: data.frame,
+    weight: data.weight,
+    cityFrom: data.cityFrom,
+    estimatedDelivery: data.estimatedDelivery,
+    image: data.image,
+    sellerId: data.sellerId,
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("user")) {
     } else {
@@ -70,28 +84,26 @@ const EditArtComp = ({ data }: any) => {
 
   const closeNotify = () => {
     setNotify(false);
+    window.location.href = "/sell/collection";
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const form = document.getElementById("form") as any;
-    const formData = new FormData(form);
-    formData.append("paintingsImage", fileImage as any);
-    formData.append("sellerId", user._id);
 
-    // loop data
-    await axios
-      .put("https://auction-api-4.vercel.app/painting/" + data._id, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setNotify(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios
+        .put("https://auction-api-4.vercel.app/painting/" + data._id, newData)
+        .then((res) => {
+          setNotify(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // see formdata value
   };
 
   return (
@@ -151,6 +163,9 @@ const EditArtComp = ({ data }: any) => {
               type="text"
               defaultValue={data.title}
               name="title"
+              onChange={(e) => {
+                newData.title = e.target.value;
+              }}
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
@@ -159,6 +174,9 @@ const EditArtComp = ({ data }: any) => {
             <textarea
               defaultValue={data.description}
               name="description"
+              onChange={(e) => {
+                newData.description = e.target.value;
+              }}
               className="resize-none w-full h-[150px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
@@ -168,6 +186,9 @@ const EditArtComp = ({ data }: any) => {
               type="text"
               defaultValue={data.medium}
               name="medium"
+              onChange={(e) => {
+                newData.medium = e.target.value;
+              }}
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
           </div>
@@ -183,6 +204,9 @@ const EditArtComp = ({ data }: any) => {
                 type="text"
                 name="width"
                 defaultValue={data.width}
+                onChange={(e) => {
+                  newData.width = e.target.value;
+                }}
                 placeholder="width"
                 className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
               />
@@ -191,6 +215,9 @@ const EditArtComp = ({ data }: any) => {
                 type="text"
                 name="height"
                 defaultValue={data.height}
+                onChange={(e) => {
+                  newData.height = e.target.value;
+                }}
                 placeholder="height"
                 className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
               />
@@ -201,6 +228,9 @@ const EditArtComp = ({ data }: any) => {
             <input
               type="text"
               defaultValue={data.frame}
+              onChange={(e) => {
+                newData.frame = e.target.value;
+              }}
               name="frame"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
@@ -210,6 +240,9 @@ const EditArtComp = ({ data }: any) => {
             <input
               type="text"
               defaultValue={data.weight}
+              onChange={(e) => {
+                newData.weight = e.target.value;
+              }}
               name="weight"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
@@ -219,6 +252,9 @@ const EditArtComp = ({ data }: any) => {
             <input
               type="text"
               defaultValue={data.cityFrom}
+              onChange={(e) => {
+                newData.cityFrom = e.target.value;
+              }}
               name="cityFrom"
               list="city"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
@@ -236,6 +272,9 @@ const EditArtComp = ({ data }: any) => {
             <input
               type="text"
               defaultValue={data.estimatedDelivery}
+              onChange={(e) => {
+                newData.estimatedDelivery = e.target.value;
+              }}
               name="estimatedDelivery"
               className="w-full h-[55px] whitespace-normal rounded-xl px-2 py-1 border-2 border-neutral-100 bg-transparent text-xl text-neutral-100 px-5 py-2 focus:outline-none focus:border-pink-700"
             />
