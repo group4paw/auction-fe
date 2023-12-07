@@ -27,8 +27,11 @@ const ModalBid = ({ cancel, highestBid, auctionId }: any) => {
         .then((res) => {
           console.log(res.data);
           if (res.data.success) {
+            localStorage.removeItem("user");
             localStorage.setItem("user", JSON.stringify(res.data.customer));
-            window.location.reload();
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
           }
         });
     } catch (err) {

@@ -31,7 +31,7 @@ export default function ListCard() {
     let wishlist = [] as any[];
     try {
       await axios
-        .get("https://auction-api-4.vercel.app/auction/")
+        .get("https://auction-api-4.vercel.app/auction/user/")
         .then((res) => {
           auctions = res.data;
         });
@@ -42,15 +42,20 @@ export default function ListCard() {
           wishlist = res.data;
         });
 
+      const statusOrder = ["live", "coming-soon", "over"];
+
       wishlist = wishlist.map((item) => item.idAuction);
       auctions = auctions.filter((auction) => wishlist.includes(auction._id));
+      auctions.map((auction) => (auction.isWishlist = true));
+      auctions.sort(
+        (a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status)
+      );
 
       setListAuction(auctions);
 
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-
       console.log(err);
     }
   };
@@ -62,7 +67,7 @@ export default function ListCard() {
           listAuction.map((data, index) => {
             return (
               <div key={index}>
-                <Card data={data} />;
+                <Card data={data} />
               </div>
             );
           })
