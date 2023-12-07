@@ -1,5 +1,4 @@
 import ListActivity from "@/components/Buy/Activity/ListActivity";
-
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

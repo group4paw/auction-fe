@@ -1,5 +1,3 @@
-import ListCart from "@/components/Buy/Order/ListCart";
-import ListOrder from "@/components/Buy/Order/ListOrder";
 import ListOrderComp from "@/components/Buy/Order/Order";
 import type { Metadata } from "next";
 

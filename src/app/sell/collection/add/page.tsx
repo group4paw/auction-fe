@@ -1,8 +1,12 @@
 import AddArtComp from "@/components/Seller/Collection/AddArt";
-import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Add Painting | Easybid",
+  description: "...",
+};
 
 const AddArt = () => {
   return (

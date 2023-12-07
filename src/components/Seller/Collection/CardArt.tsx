@@ -35,7 +35,7 @@ const CardArt = ({ data }: any) => {
 
   return (
     <>
-      <div className="relative flex flex-col rounded-2xl w-72 h-auto bg-neutral-900 bg-opacity-50 p-3 ">
+      <div className="relative flex flex-col rounded-2xl w-72 h-auto bg-neutral-900 bg-opacity-50 p-3 font-sarala">
         <div className="relative w-full flex flex-row items-center justify-end">
           <div
             onClick={() => {

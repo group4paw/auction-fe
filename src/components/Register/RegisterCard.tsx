@@ -96,26 +96,6 @@ const RegisterCard = () => {
         </button>
       </div>
       <form className="space-y-6" onSubmit={handleSubmit}>
-        {/* <div>
-          <p className="font-sarala text-sm w-full text-neutral-100 mb-2">
-            Upload Photo
-          </p>
-          <a
-            href="#"
-            className="flex flex-col items-center w-max border-2 rounded-xl border-neutral-100 p-4 aspect-square"
-          >
-            <Image
-              width={40}
-              height={40}
-              src={AddPhoto}
-              alt="Upload Photo"
-              className="flex-1 text-neutral-100"
-            />
-            <p className="font-sarala text-sm w-full text-neutral-500 text-center">
-              Your Photo
-            </p>
-          </a>
-        </div> */}
         <div>
           <p className="font-sarala text-sm w-full text-neutral-100 mb-2">
             Full Name
@@ -237,7 +217,8 @@ const RegisterCard = () => {
         <div>
           <button
             type="submit"
-            className="w-full px-3 py-3 rounded-[12px] bg-blue-500 font-sarala text-2xl text-neutral-100"
+            className="w-full px-3 py-3 rounded-[12px] bg-blue-500 font-sarala text-2xl text-neutral-100 hover:bg-blue-300 transition-all
+            "
           >
             Sign up
           </button>

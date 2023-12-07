@@ -129,7 +129,8 @@ const LoginCard = () => {
         <div>
           <button
             type="submit"
-            className="w-full px-3 py-3 rounded-[12px] bg-blue-500 font-sarala text-2xl text-neutral-100"
+            className="w-full px-3 py-3 rounded-[12px] bg-blue-500 font-sarala text-2xl text-neutral-100 hover:bg-blue-300 transition-all
+            "
           >
             Sign in
           </button>

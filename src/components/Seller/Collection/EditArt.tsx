@@ -81,13 +81,12 @@ const EditArtComp = ({ data }: any) => {
 
     // loop data
     await axios
-      .put("http://localhost:3000/painting/" + data._id, formData, {
+      .put("https://auction-api-4.vercel.app/painting/" + data._id, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        console.log(res);
         setNotify(true);
       })
       .catch((err) => {
