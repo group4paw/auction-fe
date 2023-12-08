@@ -24,6 +24,7 @@ Easybid is an online auction application that provides an easy and enjoyable exp
 - **Slide:** https://s.id/Easybid_PPT
 - **Video Presentasi:** https://drive.google.com/file/d/1CZYvqt-3XGJ7gZakpKMdMMOk5EvcJYHX/view?usp=sharing
 - **Figma File:** https://s.id/Easybid_Figma
+- **ENV File:** https://docs.google.com/document/d/1aTSEaNH7Rtdg2_3GG-cBcb9clVKjEHsEbEixJYzcc-w/edit?usp=sharing
 
 ## Tech Stack
 - **NodeJs:** Server-side
@@ -74,15 +75,16 @@ Easybid is an online auction application that provides an easy and enjoyable exp
     ```````````
     npm install
     ```````````
-3. Run App
+3. Open env file, and copy paste to this directory
+4. Run App
     ```````````
     npm run dev
     ```````````
-4. Open in your localhost
+5. Open in your localhost
     ```````````
     http://localhost:3000/
     ```````````
-5. Register with email and password to use it
+6. Register with email and password to use it
 
 ## Some capture
 ![image](https://github.com/group4paw/auction-fe/assets/88085604/be83c88c-3b85-4356-8781-c88d65555b19)
